@@ -5,7 +5,7 @@ import Promo from './Promo';
 
 const { Schema } = mongoose;
 
-const wilderSchema = new Schema({
+const StudentSchema = new Schema({
   user: User,
   subject: [Subject],
   promo: [Promo]
