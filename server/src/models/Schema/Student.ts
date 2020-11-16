@@ -1,12 +1,14 @@
 import mongoose from 'mongoose';
-import User from './User';
-import Subject from './Subject';
-import Promo from './Promo';
+import User from "../Class/User";
+
 
 const { Schema } = mongoose;
 
-const wilderSchema = new Schema({
+const StudentSchema = new Schema({
   user: User,
   subject: [Subject],
   promo: [Promo]
 })
+
+export default mongoose.model("student", StudentSchema);
+
