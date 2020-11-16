@@ -1,5 +1,5 @@
 class Promo {
-    name!: string;
-    students!: Students[];
-    subject !: Subject[];
+    private name!: string;
+    private students!: Students[];
+    private subject !: Subject[];
 }
