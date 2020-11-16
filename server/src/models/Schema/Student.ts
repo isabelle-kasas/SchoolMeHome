@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
-import User from "../Class/User";
+import User from '../Class/User';
+import Subject from '../Class/Subject';
+import Promo from '../Class/Promo';
 
 
 const { Schema } = mongoose;
@@ -11,4 +13,3 @@ const StudentSchema = new Schema({
 })
 
 export default mongoose.model("student", StudentSchema);
-
