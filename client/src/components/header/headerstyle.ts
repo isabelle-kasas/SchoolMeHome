@@ -3,7 +3,7 @@ import { colors } from '../../colors';
 import logo from '../../image/logofake.png';
 
 export const HeaderStyle = styled.header`
-    background-color: ${colors.dark};
+    background-color: ${colors.mediumdark};
     height: 100px;
     width: 100%px;
     display: flex;
@@ -27,7 +27,7 @@ export const NavLink = styled.a`
     color: ${colors.light};
     font-size: 1.5rem;
     &:hover{
-        color: ${colors.medium2}
+        color: ${colors.mediumlight}
     }
 `;
 

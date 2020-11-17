@@ -1,0 +1,20 @@
+$theme-colors: (
+    'dark':#222831,
+    'mediumdark' : #30475e,
+    'mediumlight' : #f05454,
+    'light' : #e8e8e8,
+);
+
+
+@import "~bootstrap/scss/bootstrap";
+
+
+.card img{
+    margin: 12px;
+}
+.card-columns{
+    margin: 12px;
+}
+.card-columns .card{
+    margin: 12px;
+} 
