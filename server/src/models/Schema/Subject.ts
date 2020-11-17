@@ -6,10 +6,8 @@ import Lesson from '../Class/Lesson';
 const { Schema } = mongoose;
 
 const SubjectSchema = new Schema({
-  name: String,
-  teacher: [Teacher],
-  student: [Student],
-  lessons: [Lesson],
+  name: {type: String, unique: true},
+ 
 });
 
-export default mongoose.model('SubjectModel', SubjectSchema);
+export default mongoose.model('Subject', SubjectSchema);
