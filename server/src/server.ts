@@ -1,5 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import PromoController from './controllers/PromoController';
+import SubejctsController from './controllers/SubejctsController';
 import controller from './controllers/SubejctsController';
 
 const app = express();
@@ -16,7 +18,10 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
 
-app.post('/api/subject', controller.create);
-app.get('/api/subject', controller.read);
+app.post('/api/subject', SubejctsController.create);
+app.get('/api/subject', SubejctsController.read);
+
+app.post('/api/promo', PromoController.create);
+app.get('/api/promo', PromoController.read);
 // mettre votre port local
 app.listen(8888, () => console.log('app is running'));

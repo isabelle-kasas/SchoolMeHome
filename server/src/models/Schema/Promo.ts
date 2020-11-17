@@ -6,9 +6,9 @@ import Subject from "../Class/Subject";
 const Schema = mongoose.Schema;
 
 const PromoSchema = new Schema({
-    name : String,
-    students: [Student],
-    subject: [Subject], 
+    name : {type: String},
+    students: [{firstName: String, lastName: String, email: String}],
+    subject: [{name: String}], 
     
 })
 export = mongoose.model('PromoModel', PromoSchema);
