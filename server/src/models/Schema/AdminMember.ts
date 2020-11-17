@@ -7,12 +7,17 @@ import Student from "../Class/Student";
 import Subject from "../Class/Subject";
 
 const AdminMember = new mongoose.Schema({
-    user: User,
+    user: {firstName:String, lastName: String, email: String},
     lessons: [Lesson],
-    subjects: [Subject],
-    teachers: [Teacher],
-    students: [Student],
-    promo: [Promo]
+    subject: [{name: String}], 
+    teachers:  [{
+                    user: {firstName: String, lastName: String, email : String},
+                    subject: [{name: String}], 
+                    lessons: [{name: String, start: Date, end: Date}], 
+                    promo: [{name: String, students:[{firstName: String, lastName: String, email: String}], subject: [{name: String}]} ],}],
+                    students: [{firstName: String, lastName: String, email: String
+                }],
+    promo: [{name: String, students:[{firstName: String, lastName: String, email: String}], subject: [{name: String}]} ],
 });
 
 export default mongoose.model("AdminMemberModel", AdminMember);
