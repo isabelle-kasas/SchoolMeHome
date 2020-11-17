@@ -4,6 +4,7 @@ import './gestionList.css';
 import { ButtonDouble, ButtonLeft, ButtonRight } from './gestionListstyle';
 import IntervenantListCalendar from './intervenantListCalendar';
 import PromotionListCalendar from './promotionListCalendar';
+import { Link } from "react-router-dom";
 
 export default function GestionList (){
     const [showList, setShowList] = useState(true);
@@ -12,7 +13,7 @@ export default function GestionList (){
         <div>
             <div className='gestionTitre'>
                 <h1>Gestion des planning</h1>
-                <Add></Add>
+                <div><Link to="/new"><Add /></Link></div>
             </div>
             <ButtonDouble>
                 <ButtonLeft onClick={() => setShowList(true)} className={ showList ? 'active' : ''}>Intervenants</ButtonLeft>

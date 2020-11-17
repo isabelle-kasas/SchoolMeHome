@@ -7,11 +7,9 @@ export const ButtonDouble = styled.div`
     align-items: center;
 `;
 
-export const ButtonLeft = styled.div`
-    background-color : '#fff';
+const Button = styled.div`
     border : 1px solid ${colors.dark};
-    border-radius : 10px 0 0 10px;
-    padding : 10px;
+    padding : 15px;
     cursor: pointer;
     font-weight: bold;
     &.active {
@@ -20,14 +18,10 @@ export const ButtonLeft = styled.div`
     }
 `;
 
-export const ButtonRight = styled.div`
-    border : 1px solid ${colors.dark};
+export const ButtonLeft = styled(Button)`
+    border-radius : 10px 0 0 10px;
+`;
+
+export const ButtonRight = styled(Button)`
     border-radius : 0 10px 10px 0;
-    padding : 10px;
-    cursor: pointer;
-    font-weight: bold;
-    &.active {
-        background-color: ${colors.light};
-        color: ${colors.mediumlight};
-    }
 `;
