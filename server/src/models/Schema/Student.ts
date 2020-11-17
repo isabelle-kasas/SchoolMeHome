@@ -7,9 +7,9 @@ import Promo from '../Class/Promo';
 const { Schema } = mongoose;
 
 const StudentSchema = new Schema({
-  user: User,
-  subject: [Subject],
-  promo: [Promo]
+  user: {firstName:String, lastName: String, email: String},
+  subject: [{name: String}], 
+  promo: [{name: String, students:[{firstName: String, lastName: String, email: String}], subject: [{name: String}]} ],
 })
 
 export default mongoose.model("student", StudentSchema);
