@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import controller from './controllers/SubejctsController';
+import subjectController from './controllers/SubejctsController';
+import adminMemberController from './controllers/AdminMemberController';
 
 const app = express();
 
@@ -15,8 +16,13 @@ mongoose.connect('mongodb://localhost:27017/home', {
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
+//Subject API
+app.post('/api/subject', subjectController.create);
+app.get('/api/subject', subjectController.read);
 
-app.post('/api/subject', controller.create);
-app.get('/api/subject', controller.read);
+//AdminMember API
+app.post('/api/admin_member', adminMemberController.create)
+app.get('/api/admin_member', adminMemberController.read)
+
 // mettre votre port local
 app.listen(8888, () => console.log('app is running'));
