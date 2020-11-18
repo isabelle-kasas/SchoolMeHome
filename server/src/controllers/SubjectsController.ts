@@ -7,7 +7,7 @@ export = {
     create: async (req: Request, res: Response):Promise<void> => {
         await Subject.init() 
         const newSubject = new Subject(req.body);
-        res.json({succes: true, result : await newSubject.save()})
+        res.json({success: true, result : await newSubject.save()})
     },
     read: async (req: Request, res: Response):Promise<void> => {
     await Subject.find()

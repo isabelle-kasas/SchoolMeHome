@@ -7,13 +7,22 @@ export = {
     create: async (req: Request, res: Response):Promise<void> => {
         await Promo.init() 
         const newPromo = new Promo(req.body);
-        res.json({succes: true, result : await newPromo.save()})
+        res.json({success: true, result : await newPromo.save()})
     },
     read: async (req: Request, res: Response):Promise<void> => {
     await Promo.find()
+        .populate("students", "user _id")
         .then((promos) => {
             res.json({result: promos});
         });
     },
+    patch: async (req: Request, res: Response): Promise<void> => {
+        const promoId = req.params.promoId
+        const patchPromo = req.body
+        const promo = await Promo.findOne({"_id": promoId})
+        Object.assign(promo, patchPromo)
+        await promo?.save()
+        res.json({result: promo})
+    }
 }
  

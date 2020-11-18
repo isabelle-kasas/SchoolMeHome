@@ -2,9 +2,9 @@ import express from 'express';
 import mongoose from 'mongoose';
 import AdminMemberController from './controllers/AdminMemberController';
 import PromoController from './controllers/PromoController';
-import SubejctsController from './controllers/SubejctsController';
-import controller from './controllers/SubejctsController';
-import AdminMember from './models/Schema/AdminMember';
+import SubejctsController from './controllers/SubjectsController';
+import StudentController from './controllers/StudentsController';
+import TeacherController from './controllers/TeacherController';
 
 
 const app = express();
@@ -31,6 +31,15 @@ app.get('/api/admin_member', AdminMemberController.read)
 //Promo API
 app.post('/api/promo', PromoController.create);
 app.get('/api/promo', PromoController.read);
+app.patch('/api/promo/:promoId', PromoController.patch);
+
+//Student API
+app.post('/api/student', StudentController.create);
+app.get('/api/student', StudentController.read);
+
+//Teacher API
+app.post('/api/teacher', TeacherController.create)
+app.get('/api/teacher', TeacherController.read)
 
 // mettre votre port local
 app.listen(8888, () => console.log('app is running'));

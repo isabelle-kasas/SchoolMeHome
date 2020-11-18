@@ -1,0 +1,19 @@
+
+#http
+GET  http://localhost:8888/api/teacher HTTP/1.1
+
+
+###
+POST  http://localhost:8888/api/teacher HTTP/1.1
+content-type: application/json
+
+{
+  "user": {
+    "firstName": "Aurélien",
+    "lastName": "Leygues",
+    "email": "aurelien@test.com"
+  },
+  "subject": [],
+  "lessons": [],
+  "promo": []
+}
