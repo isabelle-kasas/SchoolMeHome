@@ -15,7 +15,7 @@ export function CardCalendarList ({name}: CardCalendarProps){
             <Card.Img variant="top" src={calendar} style={{ width: '70%' }}/>
             <Card.Body>
                 <Card.Title>{name}</Card.Title>
-                <Button variant="primary">Modifier</Button>
+                <Button variant="mediumlight">Modifier</Button>
             </Card.Body>
         </Card>
     )
