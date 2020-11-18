@@ -7,4 +7,4 @@ const LessonSchema = new mongoose.Schema({
     end: Date
 });
 
-export default mongoose.model("lesson", LessonSchema);
+export default mongoose.model("Lesson", LessonSchema);
