@@ -7,7 +7,7 @@ const Schema = mongoose.Schema;
 
 const PromoSchema = new Schema({
     name : {type: String},
-    students: [{firstName: String, lastName: String, email: String}],
+    students: [{type: Schema.Types.ObjectId, ref: "Student"}],
     subject: [{name: String}], 
     
 })
