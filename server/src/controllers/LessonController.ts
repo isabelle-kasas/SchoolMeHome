@@ -1,5 +1,4 @@
 import {Request, Response} from 'express';
-import Promo from '../models/Schema/Promo';
 import Lesson from "../models/Schema/Lesson";
 
 
@@ -11,7 +10,7 @@ export = {
     },
     read: async (req: Request, res: Response): Promise<void> => {
         await Lesson.find()
-            .populate("students", "user _id")
+            .populate("subject")
             .then((lessons) => {
                 res.json({result: lessons});
             });
@@ -35,10 +34,9 @@ export = {
     findOne: async (req: Request, res: Response): Promise<void> => {
         const lessonId = req.params.lessonId
         await Lesson.findOne({"_id": lessonId})
-            .populate("students", "user _id")
+            .populate("subject")
             .then((lesson) => {
                 res.json({result: lesson});
             });
     },
-
 }

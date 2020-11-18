@@ -1,7 +1,6 @@
 
 import {Request, Response} from 'express';
 import Promo from '../models/Schema/Promo';
-import Teacher from "../models/Schema/Teacher";
 
 
 export = {
@@ -13,6 +12,7 @@ export = {
     read: async (req: Request, res: Response):Promise<void> => {
     await Promo.find()
         .populate("students", "user _id")
+        .populate("subject")
         .then((promos) => {
             res.json({result: promos});
         });
@@ -37,6 +37,7 @@ export = {
         const promoId = req.params.promoId
         await Promo.findOne({"_id": promoId})
             .populate("students", "user _id")
+            .populate("subject")
             .then((promo) => {
                 res.json({result: promo});
             });

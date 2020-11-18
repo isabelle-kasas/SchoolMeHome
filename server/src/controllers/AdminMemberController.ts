@@ -1,8 +1,6 @@
 import AdminMember from "../models/Schema/AdminMember";
 
 import {Request, Response} from 'express';
-import Promo from "../models/Schema/Promo";
-import Lesson from "../models/Schema/Lesson";
 
 
 export = {
@@ -13,6 +11,11 @@ export = {
     },
     read: async (req: Request, res: Response):Promise<void> => {
         await AdminMember.find()
+            .populate("lessons")
+            .populate("subject")
+            .populate("teachers")
+            .populate("students")
+            .populate("promo")
             .then((adminMembers) => {
                 res.json({result: adminMembers});
             });
@@ -36,7 +39,11 @@ export = {
     findOne: async (req: Request, res: Response): Promise<void> => {
         const adminId = req.params.adminId
         await AdminMember.findOne({"_id": adminId})
-            .populate("students", "user _id")
+            .populate("lessons")
+            .populate("subject")
+            .populate("teachers")
+            .populate("students")
+            .populate("promo")
             .then((adminMember) => {
                 res.json({result: adminMember});
             });

@@ -1,7 +1,6 @@
 import Subject from "../models/Schema/Subject";
 
 import {Request, Response} from 'express';
-import Promo from "../models/Schema/Promo";
 
 
 export = {
@@ -35,7 +34,6 @@ export = {
     findOne: async (req: Request, res: Response): Promise<void> => {
         const subjectId = req.params.subjectId
         await Subject.findOne({"_id": subjectId})
-            .populate("students", "user _id")
             .then((subject) => {
                 res.json({result: subject});
             });

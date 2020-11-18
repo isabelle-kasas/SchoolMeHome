@@ -1,7 +1,5 @@
 import {Request, Response} from "express";
 import Student from "../models/Schema/Student";
-import Promo from "../models/Schema/Promo";
-import Subject from "../models/Schema/Subject";
 
 export = {
     create: async (req: Request, res: Response): Promise<void> => {
@@ -35,7 +33,8 @@ export = {
     findOne: async (req: Request, res: Response): Promise<void> => {
         const studentId = req.params.studentId
         await Student.findOne({"_id": studentId})
-            .populate("students", "user _id")
+            .populate("subject")
+            .populate("promo")
             .then((student) => {
                 res.json({result: student});
             });
