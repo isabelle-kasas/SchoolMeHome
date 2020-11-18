@@ -1,10 +1,10 @@
-import './App.css';
 import React from 'react';
 import Header from './components/header/header';
 import GestionList from './components/gestionList/gestionList';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import NewCalendarForm from './components/calendar/newCalendarForm';
 import Calendar from './components/calendar/Calendar';
+import './App.css';
 
 function App() {
   return (

@@ -1,5 +1,5 @@
 import React, { FormEvent, useEffect, useState } from 'react';
-import { Form, Row } from 'react-bootstrap';
+import { Breadcrumb, Button, Form, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Axios from 'axios';
@@ -31,15 +31,25 @@ export default function NewCalendarForm (){
 
     return(
         <div>
-            <h1> <Link to='/'>Gestion</Link> {'>'}  Nouveau Calendrier Form</h1>
-            <Form style={{width: '500px', margin: 'auto'}}>
+            <Breadcrumb>
+                <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>
+                    Gestion
+                </Breadcrumb.Item>
+                <Breadcrumb.Item active>
+                    Paramètres
+                </Breadcrumb.Item>
+            </Breadcrumb>
+            <h2 className="text-center">Paramètres du nouveau calendrier</h2>
+            <Form id='form'>
                 <Form.Group controlId="exampleForm.ControlSelect1">
                     <Form.Label>Choisir un intervenant :</Form.Label>
                     <Form.Control as="select" onChange={(e) => setIntervenantSelected(e.target.value)}>
                         { teachers.map( ({user, _id}: any) => (<option value={_id}>{user.firstName} {user.lastName}</option>))}
                     </Form.Control>
                 </Form.Group>
-                <button><Link to={`/calendar/${intervenantSelected}`}>Valider</Link></button>
+                <div className="text-center mt-4">
+                    <Button variant="mediumlight" ><Link to={`/calendar/${intervenantSelected}`}>Valider</Link></Button>
+                </div>
             </Form>
         </div>
     )

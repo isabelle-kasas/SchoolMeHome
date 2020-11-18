@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './gestionList.css';
 import { ButtonDouble, ButtonLeft, ButtonRight } from './gestionListstyle';
-import IntervenantListCalendar from './intervenantListCalendar';
-import PromotionListCalendar from './promotionListCalendar';
 import { Link } from "react-router-dom";
 import add from "../../icons/add_white.png";
+import { CardColumns } from 'react-bootstrap';
+import { CardCalendarList } from './cardCalendarList';
+import Axios from 'axios';
 
 export default function GestionList (){
     const [showList, setShowList] = useState(true);
@@ -29,4 +30,43 @@ export default function GestionList (){
             </div>
         </div>
     )
+}
+
+// Liste des intervenants
+function IntervenantListCalendar (){
+    const [teachers, setTeachers] = useState([]);
+
+    const getTeachers = async () => {
+        try {
+            const resultList = await Axios.get('http://localhost:3000/api/teacher/has_lesson');
+            console.log(resultList.data.result);
+            setTeachers(resultList.data.result);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(() => {
+        getTeachers();
+    }, [])
+
+    return(
+        <CardColumns>
+            {teachers.map( ({user, _id}: any) => (<CardCalendarList name={user.firstName} firstname={user.lastName}></CardCalendarList>))}
+        </CardColumns>
+    )
+}
+
+//liste des promotions
+const fakecalendar = [
+    {name : 'L1 développeur web'},
+    {name: 'M1 intégration logicielle'}
+];
+
+function PromotionListCalendar (){
+return(
+    <CardColumns>
+                {fakecalendar.map( ({name}, key) => (<CardCalendarList name={name}></CardCalendarList>))}
+    </CardColumns>
+)
 }

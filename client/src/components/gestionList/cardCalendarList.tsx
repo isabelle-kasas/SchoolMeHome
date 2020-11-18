@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Card } from 'react-bootstrap';
 import calendar from '../../icons/Circle-icons-calendar.png';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './card.scss';
+import '../../themecolorbootstrap.scss';
 
 type CardCalendarProps = {
     name: string,

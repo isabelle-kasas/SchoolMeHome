@@ -2,7 +2,7 @@ import React, { ReactElement, useState, FormEvent } from 'react';
 import FullCalendar, { EventInput } from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import { Button, Modal, Form, Col } from 'react-bootstrap';
+import { Button, Modal, Form, Col, Breadcrumb } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link, useParams } from 'react-router-dom';
 
@@ -88,7 +88,15 @@ const Calendar = (): ReactElement => {
 
   return (
     <>
-      <h1> <Link to='/'>Gestion</Link> {'>'} { prof && prof.name}</h1>
+      <Breadcrumb>
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>
+              Gestion
+          </Breadcrumb.Item>
+          <Breadcrumb.Item active>
+              Calendrier
+          </Breadcrumb.Item>
+      </Breadcrumb>
+      <h1> Calendrier : { prof && prof.name}</h1>
       <FullCalendar
         plugins={[timeGridPlugin, interactionPlugin]}
         initialView='timeGridWeek'
