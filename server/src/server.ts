@@ -50,4 +50,4 @@ app.post('/api/teacher', TeacherController.create)
 app.get('/api/teacher', TeacherController.read)
 
 // mettre votre port local
-app.listen(8888, () => console.log('app is running'));
+app.listen(3000, () => console.log('app is running'));
