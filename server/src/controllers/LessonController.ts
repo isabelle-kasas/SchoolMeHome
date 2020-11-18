@@ -19,7 +19,7 @@ export = {
     patch: async (req: Request, res: Response): Promise<void> => {
         const lessonId = req.params.lessonId
         const patchLesson = req.body
-        const lesson = await Promo.findOne({"_id": lessonId})
+        const lesson = await Lesson.findOne({"_id": lessonId})
         Object.assign(lesson, patchLesson)
         await lesson?.save()
         res.json({result: lesson})

@@ -48,7 +48,7 @@ export = {
     findLesson: async (req: Request, res: Response): Promise<void> => {
         const teacherId = req.params.teacherId
         await Teacher.findOne({"_id": teacherId})
-            .populate("lessons")
+            .populate("promos")
             .populate("lessons")
             .populate("subject").select("lessons")
             .then((lessons) => {
@@ -58,7 +58,7 @@ export = {
     findPromo: async (req: Request, res: Response): Promise<void> => {
         const teacherId = req.params.teacherId
         await Teacher.findOne({"_id": teacherId})
-            .populate("lessons")
+            .populate("promos")
             .populate("lessons")
             .populate("subject").select("promo")
             .then((promo) => {
