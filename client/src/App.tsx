@@ -4,7 +4,7 @@ import Header from './components/header/header';
 import GestionList from './components/gestionList/gestionList';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import NewCalendarForm from './components/calendar/newCalendarForm';
-import NewCalendar from './components/calendar/newCalendar';
+import Calendar from './components/calendar/Calendar';
 
 function App() {
   return (
@@ -16,8 +16,8 @@ function App() {
           <Route path="/new">
             <NewCalendarForm />
           </Route>
-          <Route path="/newcalendar">
-            <NewCalendar />
+          <Route path="/newcalendar/:id">
+            <Calendar />
           </Route>
           <Route path="/">
             <GestionList></GestionList>
