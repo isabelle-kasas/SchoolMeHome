@@ -8,7 +8,7 @@ const { Schema } = mongoose;
 
 const StudentSchema = new Schema({
   user: {firstName:String, lastName: String, email: String},
-  subject: [{name: String}], 
+  subject: [{type: Schema.Types.ObjectId, ref: "Subject"}],
   promo: [{name: String, students:[{firstName: String, lastName: String, email: String}], subject: [{name: String}]}],
 })
 

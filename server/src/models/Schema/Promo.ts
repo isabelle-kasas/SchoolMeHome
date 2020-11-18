@@ -11,5 +11,5 @@ const PromoSchema = new Schema({
     subject: [{name: String}], 
     
 })
-export = mongoose.model('PromoModel', PromoSchema);
+export = mongoose.model('Promo', PromoSchema);
 
