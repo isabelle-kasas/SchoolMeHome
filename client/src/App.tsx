@@ -16,7 +16,7 @@ function App() {
           <Route path="/new">
             <NewCalendarForm />
           </Route>
-          <Route path="/newcalendar/:id">
+          <Route path="/calendar/:id">
             <Calendar />
           </Route>
           <Route path="/">

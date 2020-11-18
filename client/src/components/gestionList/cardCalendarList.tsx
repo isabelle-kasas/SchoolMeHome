@@ -6,15 +6,16 @@ import './card.scss';
 
 type CardCalendarProps = {
     name: string,
+    firstname?: string,
 }
 
-export function CardCalendarList ({name}: CardCalendarProps){
+export function CardCalendarList ({name, firstname}: CardCalendarProps){
     return(
         
         <Card style={{ width: '10rem' }} border="dark" className="text-center">
             <Card.Img variant="top" src={calendar} style={{ width: '70%' }}/>
             <Card.Body>
-                <Card.Title>{name}</Card.Title>
+                <Card.Title>{name} {firstname}</Card.Title>
                 <Button variant="mediumlight">Modifier</Button>
             </Card.Body>
         </Card>

@@ -88,7 +88,7 @@ const Calendar = (): ReactElement => {
 
   return (
     <>
-      <h1> <Link to='/'>Gestion</Link> {'>'}  <Link to='/new'>Nouveau Calendrier Form</Link> {'>'} { prof && prof.name}</h1>
+      <h1> <Link to='/'>Gestion</Link> {'>'} { prof && prof.name}</h1>
       <FullCalendar
         plugins={[timeGridPlugin, interactionPlugin]}
         initialView='timeGridWeek'

@@ -1,5 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import cors from 'cors';
 import AdminMemberController from './controllers/AdminMemberController';
 import PromoController from './controllers/PromoController';
 import SubjectsController from './controllers/SubjectsController';
@@ -20,6 +21,7 @@ mongoose.connect('mongodb://localhost:27017/schoolHome', {
 // Middleware
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
+app.use(cors());
 
 //Subject API
 app.post('/api/subject', SubjectsController.create);

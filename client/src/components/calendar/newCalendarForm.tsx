@@ -1,19 +1,33 @@
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import { Form, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-const intervenant = [
-    { name: 'M Dupont',
-    id: '1'
-    },
-    { name: 'M Simpson',
-    id:'2'},
-]
+import Axios from 'axios';
 
 export default function NewCalendarForm (){
 
     const [intervenantSelected , setIntervenantSelected ] = useState('1');
+    const [teachers, setTeachers] = useState([]);
+
+    const getTeachers = async () => {
+        try {
+            const resultList = await Axios.get('http://localhost:3000/api/teacher');
+            console.log(resultList.data.result);
+            let tri = resultList.data.result.filter(filterNoLesson);
+            setTeachers(tri);
+            console.log(tri);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const filterNoLesson = (element:any) => {
+        if(element.lessons.length === 0) return element;
+    }
+
+    useEffect(() => {
+        getTeachers();
+    }, [])
 
     return(
         <div>
@@ -22,10 +36,10 @@ export default function NewCalendarForm (){
                 <Form.Group controlId="exampleForm.ControlSelect1">
                     <Form.Label>Choisir un intervenant :</Form.Label>
                     <Form.Control as="select" onChange={(e) => setIntervenantSelected(e.target.value)}>
-                        { intervenant.map( ({name, id}) => (<option value={id}>{name}</option>))}
+                        { teachers.map( ({user, _id}: any) => (<option value={_id}>{user.firstName} {user.lastName}</option>))}
                     </Form.Control>
                 </Form.Group>
-                <button><Link to={`/newcalendar/${intervenantSelected}`}>Valider</Link></button>
+                <button><Link to={`/calendar/${intervenantSelected}`}>Valider</Link></button>
             </Form>
         </div>
     )
