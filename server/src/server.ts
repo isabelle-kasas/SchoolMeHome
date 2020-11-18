@@ -13,4 +13,4 @@ mongoose.connect('mongodb://localhost:27017/shoolMeHome', {
 
 
 // mettre votre port local
-app.listen(8888, () => console.log('app is running'));
+app.listen(3000, () => console.log('app is running'));
