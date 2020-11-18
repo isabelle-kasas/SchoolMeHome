@@ -8,10 +8,10 @@ import { Link, useParams } from 'react-router-dom';
 
 const intervenant = [
   { name: 'M Dupont',
-  id: 1
+  id: '1'
   },
   { name: 'M Simpson',
-  id:2},
+  id:'2'},
 ]
 
 const Calendar = (): ReactElement => {
@@ -55,13 +55,13 @@ const Calendar = (): ReactElement => {
     setLessons(lessonsCopy)
   }
 
-  let {id} = useParams();
+  let {id}:{id: string} = useParams();
   let prof =  intervenant.find((i) => id === i.id);
 
 
   return (
     <>
-      <h1> <Link to='/'>Gestion</Link> {'>'}  <Link to='/new'>Nouveau Calendrier Form</Link> {'>'} {prof}</h1>
+      <h1> <Link to='/'>Gestion</Link> {'>'}  <Link to='/new'>Nouveau Calendrier Form</Link> {'>'} { prof && prof.name}</h1>
       <FullCalendar
         plugins={[timeGridPlugin, interactionPlugin]}
         initialView='timeGridWeek'

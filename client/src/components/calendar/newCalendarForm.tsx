@@ -13,7 +13,7 @@ const intervenant = [
 
 export default function NewCalendarForm (){
 
-    const [intervenantSelected , setIntervenantSelected ] = useState('');
+    const [intervenantSelected , setIntervenantSelected ] = useState('1');
 
     return(
         <div>
