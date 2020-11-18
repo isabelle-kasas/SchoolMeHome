@@ -1,23 +1,21 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useState, FormEvent } from 'react';
 import FullCalendar, { EventInput } from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { Button, Modal, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-
-
 const Calendar = (): ReactElement => {
 
-  // type LessonType = {
-  //   start: String;
-  //   end: String;
-  //   subject: String;
-  //   promo: String;
-  // }
+  type LessonType = {
+    start: string;
+    end: string;
+    subject: string;
+    promo: string;
+  }
 
   const [lessons, setLessons] = useState<EventInput[]>([])
-  const [newLesson, setNewLesson] = useState({
+  const [newLesson, setNewLesson] = useState<LessonType>({
     start: '',
     end: '',
     subject: '',
@@ -30,7 +28,7 @@ const Calendar = (): ReactElement => {
   const handleChange = (e: any) => {
     setNewLesson({ ...newLesson, [e.target.name]: e.target.value })
   }
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
     setLessons([...lessons, { id: `${lessons.length}`, title: newLesson.promo, start: newLesson.start, end: newLesson.end }])
     setNewLesson({
