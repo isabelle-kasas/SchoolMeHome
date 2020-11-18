@@ -2,7 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import AdminMemberController from './controllers/AdminMemberController';
 import PromoController from './controllers/PromoController';
-import SubejctsController from './controllers/SubjectsController';
+import SubjectsController from './controllers/SubjectsController';
 import StudentController from './controllers/StudentsController';
 import TeacherController from './controllers/TeacherController';
 import LessonController from './controllers/LessonController';
@@ -16,17 +16,17 @@ mongoose.connect('mongodb://localhost:27017/schoolHome', {
     useUnifiedTopology: true,
     useCreateIndex: true,
     autoIndex: true,
-})
+}).then(() => console.log("DB Connected"))
 // Middleware
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
 //Subject API
-app.post('/api/subject', SubejctsController.create);
-app.get('/api/subject', SubejctsController.read);
-app.get('/api/subject/:subjectId', SubejctsController.findOne);
-app.patch('/api/subject/:subjectId', SubejctsController.patch);
-app.put('/api/subject/:subjectId', SubejctsController.update);
+app.post('/api/subject', SubjectsController.create);
+app.get('/api/subject', SubjectsController.read);
+app.get('/api/subject/:subjectId', SubjectsController.findOne);
+app.patch('/api/subject/:subjectId', SubjectsController.patch);
+app.put('/api/subject/:subjectId', SubjectsController.update);
 
 //AdminMember API
 app.post('/api/admin_member', AdminMemberController.create)

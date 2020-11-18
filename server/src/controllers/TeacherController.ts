@@ -1,7 +1,6 @@
 import {Request, Response} from "express";
 import Teacher from "../models/Schema/Teacher";
 import Promo from "../models/Schema/Promo";
-import Lesson from "../models/Schema/Lesson";
 
 
 export = {

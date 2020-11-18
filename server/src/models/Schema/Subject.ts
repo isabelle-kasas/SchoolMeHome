@@ -1,7 +1,4 @@
 import mongoose from 'mongoose';
-import Teacher from '../Class/Teacher';
-import Student from '../Class/Student';
-import Lesson from '../Class/Lesson';
 
 const { Schema } = mongoose;
 
