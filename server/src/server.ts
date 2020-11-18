@@ -5,6 +5,7 @@ import PromoController from './controllers/PromoController';
 import SubejctsController from './controllers/SubjectsController';
 import StudentController from './controllers/StudentsController';
 import TeacherController from './controllers/TeacherController';
+import LessonController from './controllers/LessonController';
 
 
 const app = express();
@@ -23,13 +24,16 @@ app.use(express.json());
 //Subject API
 app.post('/api/subject', SubejctsController.create);
 app.get('/api/subject', SubejctsController.read);
+app.get('/api/subject/:subjectId', SubejctsController.findOne);
+app.patch('/api/subject/:subjectId', SubejctsController.patch);
+app.put('/api/subject/:subjectId', SubejctsController.update);
 
 //AdminMember API
 app.post('/api/admin_member', AdminMemberController.create)
 app.get('/api/admin_member', AdminMemberController.read)
 app.get('/api/admin_member/:adminId', AdminMemberController.findOne)
-app.patch('/api/admin_member', AdminMemberController.patch)
-app.put('/api/admin_member', AdminMemberController.update)
+app.patch('/api/admin_member/:adminId', AdminMemberController.patch)
+app.put('/api/admin_member/:adminId', AdminMemberController.update)
 
 //Promo API
 app.post('/api/promo', PromoController.create);
@@ -41,13 +45,34 @@ app.put('/api/promo/:promoId', PromoController.update);
 //Student API
 app.post('/api/student', StudentController.create);
 app.get('/api/student', StudentController.read);
-app.get('/api/student', StudentController.read);
-app.get('/api/student', StudentController.read);
-app.get('/api/student', StudentController.read);
+app.get('/api/student/:studentId', StudentController.findOne);
+app.patch('/api/student/:studentId', StudentController.patch);
+app.put('/api/student/:studentId', StudentController.update);
 
 //Teacher API
 app.post('/api/teacher', TeacherController.create)
 app.get('/api/teacher', TeacherController.read)
+app.get('/api/teacher/:teacherId', TeacherController.findOne)
+app.get('/api/teacher/lessons/:teacherId', TeacherController.findLesson)
+app.get('/api/teacher/promo/:teacherId', TeacherController.findPromo)
+app.get('/api/teacher/subject/:teacherId', TeacherController.findSubject)
+app.patch('/api/teacher/:teacherId', TeacherController.patch)
+app.put('/api/teacher/:teacherId', TeacherController.update)
+
+//Teacher API
+app.post('/api/teacher', TeacherController.create)
+app.get('/api/teacher', TeacherController.read)
+app.get('/api/teacher/:teacherId', TeacherController.findOne)
+app.patch('/api/teacher/:teacherId', TeacherController.patch)
+app.put('/api/teacher/:teacherId', TeacherController.update)
+
+//Lesson API
+app.post('/api/lesson', LessonController.create)
+app.get('/api/lesson', LessonController.read)
+app.get('/api/lesson/:lessonId', LessonController.findOne)
+app.patch('/api/lesson/:lessonId', LessonController.patch)
+app.put('/api/lesson/:lessonId', LessonController.update)
+
 
 // mettre votre port local
 app.listen(3000, () => console.log('app is running'));

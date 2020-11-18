@@ -38,9 +38,41 @@ export = {
     findOne: async (req: Request, res: Response): Promise<void> => {
         const teacherId = req.params.teacherId
         await Teacher.findOne({"_id": teacherId})
-            .populate("students", "user _id")
+            .populate("promo")
+            .populate("lessons")
+            .populate("subject")
             .then((teacher) => {
                 res.json({result: teacher});
             });
     },
+    findLesson: async (req: Request, res: Response): Promise<void> => {
+        const teacherId = req.params.teacherId
+        await Teacher.findOne({"_id": teacherId})
+            .populate("lessons")
+            .populate("lessons")
+            .populate("subject").select("lessons")
+            .then((lessons) => {
+                res.json({result: lessons});
+            });
+    },
+    findPromo: async (req: Request, res: Response): Promise<void> => {
+        const teacherId = req.params.teacherId
+        await Teacher.findOne({"_id": teacherId})
+            .populate("lessons")
+            .populate("lessons")
+            .populate("subject").select("promo")
+            .then((promo) => {
+                res.json({result: promo});
+            });
+    },
+    findSubject: async (req: Request, res: Response): Promise<void> => {
+        const teacherId = req.params.teacherId
+        await Teacher.findOne({"_id": teacherId})
+            .populate("lessons")
+            .populate("lessons")
+            .populate("subject").select("subject")
+            .then((subject) => {
+                res.json({result: subject});
+            });
+    }
 }
