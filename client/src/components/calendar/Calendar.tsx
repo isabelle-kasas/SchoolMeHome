@@ -2,17 +2,44 @@ import React, { ReactElement, useState, FormEvent } from 'react';
 import FullCalendar, { EventInput } from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import { Button, Modal, Form } from 'react-bootstrap';
+import { Button, Modal, Form, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link, useParams } from 'react-router-dom';
 
 const intervenant = [
-  { name: 'M Dupont',
-  id: '1'
+  {
+    name: 'M Dupont',
+    id: '1'
   },
-  { name: 'M Simpson',
-  id:'2'},
+  {
+    name: 'M Simpson',
+    id: '2'
+  },
 ]
+
+const subjects = [{
+  id: '1',
+  name: 'HTML'
+},
+{
+  id: '2',
+  name: 'CSS'
+},
+{
+  id: '3',
+  name: 'REACT'
+}]
+
+const promos = [{
+  id: '1',
+  name: 'M1 intégration logicielle'
+},
+{
+  id: '2',
+  name: 'L1 développeur web'
+}
+]
+
 
 const Calendar = (): ReactElement => {
 
@@ -27,8 +54,8 @@ const Calendar = (): ReactElement => {
   const [newLesson, setNewLesson] = useState<LessonType>({
     start: '',
     end: '',
-    subject: '',
-    promo: ''
+    subject: subjects[0].name,
+    promo: promos[0].name
   })
   const [show, setShow] = useState<Boolean>(false);
 
@@ -39,12 +66,12 @@ const Calendar = (): ReactElement => {
   }
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    setLessons([...lessons, { id: `${lessons.length}`, title: newLesson.promo, start: newLesson.start, end: newLesson.end }])
+    setLessons([...lessons, { id: `${lessons.length}`, title: `${newLesson.subject} / ${newLesson.promo}`, start: newLesson.start, end: newLesson.end }])
     setNewLesson({
       start: '',
       end: '',
-      subject: '',
-      promo: ''
+      subject: subjects[0].name,
+      promo: promos[0].name
     })
   }
 
@@ -55,8 +82,8 @@ const Calendar = (): ReactElement => {
     setLessons(lessonsCopy)
   }
 
-  let {id}:{id: string} = useParams();
-  let prof =  intervenant.find((i) => id === i.id);
+  let { id }: { id: string } = useParams();
+  let prof = intervenant.find((i) => id === i.id);
 
 
   return (
@@ -97,19 +124,25 @@ const Calendar = (): ReactElement => {
         </Modal.Header>
         <Form onSubmit={e => handleSubmit(e)}>
           <Modal.Body>
-            <Form.Group controlId="formBasicEmail">
-              <Form.Control type="text" placeholder="Matière" name="subject" value={newLesson.subject} onChange={e => handleChange(e)} />
+            <Form.Group className="d-flex">
+              <Form.Label className="m-2" style={{width:"70px"}}>Matière</Form.Label>
+              <Form.Control as="select" name="subject" value={newLesson.subject} onChange={e => handleChange(e)}>
+                {subjects.map(subject => <option value={subject.name}>{subject.name}</option>)}
+              </Form.Control>
             </Form.Group>
-            <Form.Group controlId="formBasicPassword">
-              <Form.Control type="text" placeholder="Promo" name="promo" value={newLesson.promo} onChange={e => handleChange(e)} />
+            <Form.Group className="d-flex">
+              <Form.Label className="m-2" style={{width:"70px"}}>Promo</Form.Label>
+              <Form.Control as="select" name="promo" value={newLesson.promo} onChange={e => handleChange(e)}>
+                {promos.map(promo => <option value={promo.name}>{promo.name}</option>)}
+              </Form.Control>
             </Form.Group>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
-              Close
+              Fermer
           </Button>
             <Button variant="primary" type="submit" onClick={handleClose}>
-              Save Changes
+              Sauvegarder
           </Button>
           </Modal.Footer>
         </Form>
