@@ -52,11 +52,11 @@ app.put('/api/student/:studentId', StudentController.update);
 //Teacher API
 app.post('/api/teacher', TeacherController.create)
 app.get('/api/teacher', TeacherController.read)
+app.get('/api/teacher/has_lesson', TeacherController.findTeachersWithLessons)
 app.get('/api/teacher/:teacherId', TeacherController.findOne)
 app.get('/api/teacher/lessons/:teacherId', TeacherController.findLesson)
 app.get('/api/teacher/promo/:teacherId', TeacherController.findPromo)
 app.get('/api/teacher/subject/:teacherId', TeacherController.findSubject)
-app.get('/api/teacher/has_lesson', TeacherController.findTeachersWithLessons)
 app.patch('/api/teacher/:teacherId', TeacherController.patch)
 app.put('/api/teacher/:teacherId', TeacherController.update)
 
