@@ -1,5 +1,7 @@
 import {Request, Response} from "express";
 import Student from "../models/Schema/Student";
+import Promo from "../models/Schema/Promo";
+import Subject from "../models/Schema/Subject";
 
 export = {
     create: async (req: Request, res: Response): Promise<void> => {
@@ -12,6 +14,30 @@ export = {
             .then((students) => {
                 console.log(students.map(student => student._id))
                 res.json({result: students});
+            });
+    },
+    patch: async (req: Request, res: Response): Promise<void> => {
+        const studentId = req.params.studentId
+        const patchStudent = req.body
+        const student = await Student.findOne({"_id": studentId})
+        Object.assign(student, patchStudent)
+        await student?.save()
+        res.json({result: student})
+    },
+    update: async (req: Request, res: Response): Promise<void> => {
+        const studentId = req.params.studentId
+        const patchStudent = req.body
+        const student = await Student.findOne({"_id": studentId})
+        Object.assign(student, patchStudent)
+        await student?.save()
+        res.json({result: student})
+    },
+    findOne: async (req: Request, res: Response): Promise<void> => {
+        const studentId = req.params.studentId
+        await Student.findOne({"_id": studentId})
+            .populate("students", "user _id")
+            .then((student) => {
+                res.json({result: student});
             });
     },
 }

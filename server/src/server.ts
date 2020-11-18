@@ -27,14 +27,22 @@ app.get('/api/subject', SubejctsController.read);
 //AdminMember API
 app.post('/api/admin_member', AdminMemberController.create)
 app.get('/api/admin_member', AdminMemberController.read)
+app.get('/api/admin_member/:adminId', AdminMemberController.findOne)
+app.patch('/api/admin_member', AdminMemberController.patch)
+app.put('/api/admin_member', AdminMemberController.update)
 
 //Promo API
 app.post('/api/promo', PromoController.create);
 app.get('/api/promo', PromoController.read);
+app.get('/api/promo/:promoId', PromoController.read);
 app.patch('/api/promo/:promoId', PromoController.patch);
+app.put('/api/promo/:promoId', PromoController.update);
 
 //Student API
 app.post('/api/student', StudentController.create);
+app.get('/api/student', StudentController.read);
+app.get('/api/student', StudentController.read);
+app.get('/api/student', StudentController.read);
 app.get('/api/student', StudentController.read);
 
 //Teacher API

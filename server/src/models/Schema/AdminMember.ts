@@ -34,4 +34,4 @@ const AdminMember = new mongoose.Schema({
     }],
 });
 
-export default mongoose.model("AdminMemberModel", AdminMember);
+export default mongoose.model("AdminMember", AdminMember);

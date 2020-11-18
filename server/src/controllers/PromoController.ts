@@ -1,6 +1,7 @@
 
 import {Request, Response} from 'express';
 import Promo from '../models/Schema/Promo';
+import Teacher from "../models/Schema/Teacher";
 
 
 export = {
@@ -23,6 +24,22 @@ export = {
         Object.assign(promo, patchPromo)
         await promo?.save()
         res.json({result: promo})
-    }
+    },
+    update: async (req: Request, res: Response): Promise<void> => {
+        const promoId = req.params.promoId
+        const patchPromo = req.body
+        const promo = await Promo.findOne({"_id": promoId})
+        Object.assign(promo, patchPromo)
+        await promo?.save()
+        res.json({result: promo})
+    },
+    findOne: async (req: Request, res: Response): Promise<void> => {
+        const promoId = req.params.promoId
+        await Promo.findOne({"_id": promoId})
+            .populate("students", "user _id")
+            .then((promo) => {
+                res.json({result: promo});
+            });
+    },
 }
  

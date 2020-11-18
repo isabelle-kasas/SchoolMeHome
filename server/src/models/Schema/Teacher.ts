@@ -8,10 +8,10 @@ const Schema = mongoose.Schema;
 
 const TeacherSchema = new Schema({
     user: {firstName: String, lastName: String, email : String},
-    subject: [{name: String}], 
-    lessons: [{name: String, start: Date, end: Date}], 
-    promo: [{name: String, students:[{firstName: String, lastName: String, email: String}], subject: [{name: String}]} ],
+    subject: [{type: Schema.Types.ObjectId, ref: "Subject"}],
+    lessons: [{type: Schema.Types.ObjectId, ref: "Lesson"}],
+    promo: [{type: Schema.Types.ObjectId, ref: "Promo"}],
 });
 
-export default mongoose.model('TeacherModel', TeacherSchema);
+export default mongoose.model('Teacher', TeacherSchema);
 
