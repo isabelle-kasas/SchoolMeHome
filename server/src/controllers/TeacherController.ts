@@ -73,5 +73,17 @@ export = {
             .then((subject) => {
                 res.json({result: subject});
             });
+    },
+    findTeachersWithLessons: async (req: Request, res: Response): Promise<void> => {
+        await Teacher.find()
+            .populate("promo")
+            .populate("lessons")
+            .populate("subject")
+            .then((teachers: any[]) => {
+                const teacherWithLessons = teachers.filter((teacher) => {
+                    return teacher.lessons.length > 0
+                })
+                res.json({result: teacherWithLessons});
+            });
     }
 }
