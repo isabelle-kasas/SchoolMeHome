@@ -4,16 +4,41 @@ GET  http://localhost:8888/api/teacher HTTP/1.1
 
 
 ###
+GET  http://localhost:8888/api/teacher/has_lesson HTTP/1.1
+
+
+###
 POST  http://localhost:8888/api/teacher HTTP/1.1
 content-type: application/json
 
 {
   "user": {
-    "firstName": "Aurélien",
-    "lastName": "Leygues",
-    "email": "aurelien@test.com"
+    "firstName": "Isabelle",
+    "lastName": "Kasas",
+    "email": "isabelle@test.com"
   },
   "subject": [],
   "lessons": [],
   "promo": []
+}
+
+
+###
+PUT  http://localhost:8888/api/teacher/5fb3e786d2eb232c0f150e94 HTTP/1.1
+content-type: application/json
+
+{
+  "name": "L1",
+  "students": [],
+  "subjects": []
+}
+
+###
+PATCH  http://localhost:8888/api/teacher/5fb51bc7ee5f9b27b42174de HTTP/1.1
+content-type: application/json
+
+{
+  "lessons": [
+    "5fb5319b1609c43e30bf7a40"
+  ]
 }

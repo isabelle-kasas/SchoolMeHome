@@ -1,6 +1,7 @@
 import {Request, Response} from "express";
 import Teacher from "../models/Schema/Teacher";
 import Promo from "../models/Schema/Promo";
+import {arrayNotEmpty, isEmpty} from "class-validator";
 
 
 export = {
@@ -21,7 +22,7 @@ export = {
     patch: async (req: Request, res: Response): Promise<void> => {
         const teacherId = req.params.teacherId
         const patchTeacher = req.body
-        const teacher = await Promo.findOne({"_id": teacherId})
+        const teacher = await Teacher.findOne({"_id": teacherId})
         Object.assign(teacher, patchTeacher)
         await teacher?.save()
         res.json({result: teacher})
@@ -29,7 +30,7 @@ export = {
     update: async (req: Request, res: Response): Promise<void> => {
         const teacherId = req.params.teacherId
         const updateTeacher = req.body
-        const teacher = await Promo.findOne({"_id": teacherId})
+        const teacher = await Teacher.findOne({"_id": teacherId})
         Object.assign(teacher, updateTeacher)
         await teacher?.save()
         res.json({result: teacher})
@@ -80,10 +81,14 @@ export = {
             .populate("lessons")
             .populate("subject")
             .then((teachers: any[]) => {
-                const teacherWithLessons = teachers.filter((teacher) => {
-                    return teacher.lessons.length > 0
-                })
-                res.json({result: teacherWithLessons});
+                const teacherWithLessons = teachers.filter((teacher) =>
+                    arrayNotEmpty(teacher.lessons)
+                )
+                if (arrayNotEmpty(teacherWithLessons)) {
+                    res.json({result: teacherWithLessons});
+                } else {
+                    res.json({result: []});
+                }
             });
     }
 }
