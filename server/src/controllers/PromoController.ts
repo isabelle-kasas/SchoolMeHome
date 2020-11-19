@@ -14,7 +14,7 @@ export = {
     read: async (req: Request, res: Response):Promise<void> => {
     await Promo.find()
         .populate("students", "user _id")
-        .populate("subject")
+        .populate("lessons")
         .then((promos) => {
             res.json({result: promos});
         });
@@ -39,24 +39,19 @@ export = {
         const promoId = req.params.promoId
         await Promo.findOne({"_id": promoId})
             .populate("students", "user _id")
-            .populate("subject")
+            .polygon("lessons")
             .then((promo) => {
                 res.json({result: promo});
             });
     },
-    promoHasLesson: async (req: Request, res: Response): Promise<void> => {
-        await Promo.find()
-            .populate("students")
+    promoLesson: async (req: Request, res: Response): Promise<void> => {
+        const promoId = req.params.promoId
+        await Promo.findOne({"_id": promoId})
+            .populate("students", "user _id")
             .populate("lessons")
-            .then((promos: any[]) => {
-                const promoWithLessons= promos.filter((lesson) =>
-                    arrayNotEmpty(lesson.lessons)
-                )
-                if (arrayNotEmpty(promoWithLessons)) {
-                    res.json({result: promoWithLessons});
-                } else {
-                    res.json({result: []});
-                }
+            .select("lessons")
+            .then((lessons) => {
+                res.json({result: lessons});
             });
     }
 }
