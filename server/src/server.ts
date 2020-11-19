@@ -14,13 +14,13 @@ app.use(cors());
 
 // mettre votre port mDB et le nom de votre BDD locale
 mongoose.connect('mongodb://127.0.0.1:27017/home', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-    autoIndex: true,
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+  autoIndex: true,
 }).then(() => console.log("DB Connected"))
 // Middleware
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 

@@ -37,32 +37,10 @@ const Calendar = (): ReactElement => {
   const [show, setShow] = useState<Boolean>(false);
   const [subjects, setSubjects] = useState<{ name: string, _id: string }[]>();
   const [promos, setPromos] = useState<{ name: string }[]>();
+  let { id }: { id: string } = useParams();
+  let prof = intervenant.find((i) => id === i.id);
 
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const resultSubject = await axios('http://localhost:3000/api/subject');
-  //       setSubjects(resultSubject.data.result);
-  //       const resultPromo = await axios('http://localhost:3000/api/promo');
-  //       setPromos(resultPromo.data.result);
-  //       const resultLessons = await axios('http://localhost:3000/api/lesson');
-  //       console.log(resultSubject)
-  //       setLessons(resultLessons.data.result.map((d: any): EventInput => {
-  //         return ({
-  //           id: d._id,
-  //           title: `${resultSubject.data.result.find((s: any) => d.subject === s._id).name} / ${d.name}`,
-  //           start: d.start,
-  //           end: d.end
-  //         })
-  //       }))
-  //       setNewLesson({ ...newLesson, subject: { name: resultSubject.data.result[0].name, id: resultSubject.data.result[0]._id }, promo: resultPromo.data.result[0].name })
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, [])
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -100,7 +78,7 @@ const Calendar = (): ReactElement => {
     e.preventDefault()
     const fetchData = async () => {
       try {
-        const result = await axios.post('http://localhost:3000/api/lesson', {
+        const result = await axios.post(`http://localhost:3000/api/teacher/lessons/${id}`, {
           name: newLesson.promo,
           subject: newLesson.subject.id,
           start: newLesson.start,
@@ -133,8 +111,6 @@ const Calendar = (): ReactElement => {
     fetchData()
   }
 
-  let { id }: { id: string } = useParams();
-  let prof = intervenant.find((i) => id === i.id);
 
   if (subjects && promos) {
     return (
@@ -147,7 +123,7 @@ const Calendar = (): ReactElement => {
             Calendrier
           </Breadcrumb.Item>
         </Breadcrumb>
-        {/* <h1> Calendrier : {prof && prof.name}</h1> */}
+        <h1> Calendrier : {prof && prof.name}</h1>
         <FullCalendar
           plugins={[timeGridPlugin, interactionPlugin]}
           initialView='timeGridWeek'
