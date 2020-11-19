@@ -48,6 +48,7 @@ const Calendar = (): ReactElement => {
         const resultLessons = await axios('http://localhost:3000/api/lesson');
         console.log(resultSubject)
         setLessons(resultLessons.data.result.map((d: any): EventInput => {
+          console.log(d)
           return ({
             id: d._id,
             title: `${resultSubject.data.result.find((s: any) => d.subject === s._id).name} / ${d.name}`,
