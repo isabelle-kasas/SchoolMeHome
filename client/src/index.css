@@ -11,3 +11,47 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+h1{
+  margin-top: 20px;
+}
+
+h2{
+  margin-top: 20px;
+}
+
+.breadcrumb{
+  background-color: #e8e8e8;
+}
+
+.breadcrumb li a{
+  color: #f05454;
+}
+
+.breadcrumb-item.active {
+  color: #30475e;
+}
+
+#form {
+  margin: auto;
+  margin-top: 5%;
+  max-width: 500px;
+}
+
+.card img{
+  margin: 12px;
+}
+.card-columns{
+  margin: 12px;
+}
+.card-columns .card{
+  margin: 12px;
+} 
+
+.btn-mediumlight a {
+  color: white;
+}
+.btn-mediumlight a:hover {
+  color: white;
+  text-decoration: none;
+}
