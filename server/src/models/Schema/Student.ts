@@ -2,7 +2,6 @@ import mongoose from 'mongoose';
 import Subject from '../Class/Subject';
 import Promo from '../Class/Promo';
 
-
 const { Schema } = mongoose;
 
 const StudentSchema = new Schema({
