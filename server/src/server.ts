@@ -39,6 +39,7 @@ app.put('/api/admin_member/:adminId', AdminMemberController.update)
 app.post('/api/promo', PromoController.create);
 app.get('/api/promo', PromoController.read);
 app.get('/api/promo/:promoId', PromoController.read);
+app.put('/api/promo/lessons/:promoId', PromoController.promoLesson);
 app.patch('/api/promo/:promoId', PromoController.patch);
 app.put('/api/promo/:promoId', PromoController.update);
 
