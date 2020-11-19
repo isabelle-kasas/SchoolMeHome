@@ -19,6 +19,16 @@ const intervenant = [
 ]
 
 const Calendar = (): ReactElement => {
+  const [intervenant, setIntervenant] = useState<any>([]);
+  const getTeachers = async () => {
+    try {
+        const resultList = await axios.get('http://localhost:3000/api/teacher');
+        console.log(resultList.data.result);
+        setIntervenant(resultList.data.result);
+    } catch (error) {
+        console.log(error)
+    }
+  }
 
   type LessonType = {
     start: string;
@@ -66,6 +76,7 @@ const Calendar = (): ReactElement => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        getTeachers();
         const resultSubject = await axios('http://localhost:3000/api/subject');
         setSubjects(resultSubject.data.result);
         const resultPromo = await axios('http://localhost:3000/api/promo');
@@ -134,7 +145,7 @@ const Calendar = (): ReactElement => {
   }
 
   let { id }: { id: string } = useParams();
-  let prof = intervenant.find((i) => id === i.id);
+  let prof:any = intervenant.find((i: any) => id === i._id);
 
   if (subjects && promos) {
     return (
@@ -147,7 +158,7 @@ const Calendar = (): ReactElement => {
             Calendrier
           </Breadcrumb.Item>
         </Breadcrumb>
-        {/* <h1> Calendrier : {prof && prof.name}</h1> */}
+        <h1> Calendrier : {prof && prof.user.firstName} {prof && prof.user.lastName}</h1>
         <FullCalendar
           plugins={[timeGridPlugin, interactionPlugin]}
           initialView='timeGridWeek'

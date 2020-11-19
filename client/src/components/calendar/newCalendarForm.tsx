@@ -6,8 +6,9 @@ import Axios from 'axios';
 
 export default function NewCalendarForm (){
 
-    const [intervenantSelected , setIntervenantSelected ] = useState('1');
+    
     const [teachers, setTeachers] = useState([]);
+    const [intervenantSelected , setIntervenantSelected ] = useState('');
 
     const getTeachers = async () => {
         try {
@@ -15,7 +16,8 @@ export default function NewCalendarForm (){
             console.log(resultList.data.result);
             let tri = resultList.data.result.filter(filterNoLesson);
             setTeachers(tri);
-            console.log(tri);
+            console.log(tri[0]['_id']);
+            setIntervenantSelected(tri[0]['_id']);
         } catch (error) {
             console.log(error)
         }
