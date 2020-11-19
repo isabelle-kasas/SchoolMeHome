@@ -1,31 +1,57 @@
-import React, { FormEvent, useState } from 'react';
-import { Form, Row } from 'react-bootstrap';
+import React, { FormEvent, useEffect, useState } from 'react';
+import { Breadcrumb, Button, Form, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-const intervenant = [
-    { name: 'M Dupont',
-    id: '1'
-    },
-    { name: 'M Simpson',
-    id:'2'},
-]
+import Axios from 'axios';
 
 export default function NewCalendarForm (){
 
-    const [intervenantSelected , setIntervenantSelected ] = useState('1');
+    
+    const [teachers, setTeachers] = useState([]);
+    const [intervenantSelected , setIntervenantSelected ] = useState('');
+
+    const getTeachers = async () => {
+        try {
+            const resultList = await Axios.get('http://localhost:3000/api/teacher');
+            console.log(resultList.data.result);
+            let tri = resultList.data.result.filter(filterNoLesson);
+            setTeachers(tri);
+            console.log(tri[0]['_id']);
+            setIntervenantSelected(tri[0]['_id']);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const filterNoLesson = (element:any) => {
+        if(element.lessons.length === 0) return element;
+    }
+
+    useEffect(() => {
+        getTeachers();
+    }, [])
 
     return(
         <div>
-            <h1> <Link to='/'>Gestion</Link> {'>'}  Nouveau Calendrier Form</h1>
-            <Form style={{width: '500px', margin: 'auto'}}>
+            <Breadcrumb>
+                <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>
+                    Gestion
+                </Breadcrumb.Item>
+                <Breadcrumb.Item active>
+                    Paramètres
+                </Breadcrumb.Item>
+            </Breadcrumb>
+            <h2 className="text-center">Paramètres du nouveau calendrier</h2>
+            <Form id='form'>
                 <Form.Group controlId="exampleForm.ControlSelect1">
                     <Form.Label>Choisir un intervenant :</Form.Label>
                     <Form.Control as="select" onChange={(e) => setIntervenantSelected(e.target.value)}>
-                        { intervenant.map( ({name, id}) => (<option value={id}>{name}</option>))}
+                        { teachers.map( ({user, _id}: any) => (<option value={_id}>{user.firstName} {user.lastName}</option>))}
                     </Form.Control>
                 </Form.Group>
-                <button><Link to={`/newcalendar/${intervenantSelected}`}>Valider</Link></button>
+                <div className="text-center mt-4">
+                    <Button variant="mediumlight" ><Link to={`/calendar/${intervenantSelected}`}>Valider</Link></Button>
+                </div>
             </Form>
         </div>
     )

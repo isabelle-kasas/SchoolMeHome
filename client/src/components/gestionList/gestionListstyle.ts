@@ -5,6 +5,7 @@ export const ButtonDouble = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 4%;
 `;
 
 const Button = styled.div`
