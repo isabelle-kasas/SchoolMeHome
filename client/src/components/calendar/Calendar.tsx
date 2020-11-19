@@ -46,7 +46,6 @@ const Calendar = (): ReactElement => {
         const resultPromo = await axios('http://localhost:3000/api/promo');
         setPromos(resultPromo.data.result);
         const resultLessons = await axios('http://localhost:3000/api/lesson');
-        console.log(resultSubject)
         setLessons(resultLessons.data.result.map((d: any): EventInput => {
           console.log(d)
           return ({
@@ -123,7 +122,7 @@ const Calendar = (): ReactElement => {
             Calendrier
           </Breadcrumb.Item>
         </Breadcrumb>
-        <h1> Calendrier : {prof && prof.name}</h1>
+        {/* <h1> Calendrier : {prof && prof.name}</h1> */}
         <FullCalendar
           plugins={[timeGridPlugin, interactionPlugin]}
           initialView='timeGridWeek'
