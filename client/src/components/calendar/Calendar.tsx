@@ -7,23 +7,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 
-const intervenant = [
-  {
-    name: 'M Dupont',
-    id: '1'
-  },
-  {
-    name: 'M Simpson',
-    id: '2'
-  },
-]
-
 const Calendar = (): ReactElement => {
   const [intervenant, setIntervenant] = useState<any>([]);
   const getTeachers = async () => {
     try {
         const resultList = await axios.get('http://localhost:3000/api/teacher');
-        console.log(resultList.data.result);
         setIntervenant(resultList.data.result);
     } catch (error) {
         console.log(error)
@@ -59,12 +47,11 @@ const Calendar = (): ReactElement => {
         setSubjects(resultSubject.data.result);
         const resultPromo = await axios('http://localhost:3000/api/promo');
         setPromos(resultPromo.data.result);
-        const resultLessons = await axios('http://localhost:3000/api/lesson');
-        setLessons(resultLessons.data.result.map((d: any): EventInput => {
-          console.log(resultSubject.data.result, d.subject)
+        const resultLessons = await axios(`http://localhost:3000/api/teacher/lessons/${id}`);
+        setLessons(resultLessons.data.result.lessons.map((d: any): EventInput => {
           return ({
             id: d._id,
-            title: `${resultSubject.data.result.find((s: any) => d.subject._id === s._id).name} / ${d.name}`,
+            title: `${resultSubject.data.result.find((s: any) => d.subject === s._id).name} / ${d.name}`,
             start: d.start,
             end: d.end
           })
@@ -89,11 +76,15 @@ const Calendar = (): ReactElement => {
     e.preventDefault()
     const fetchData = async () => {
       try {
-        const result = await axios.post(`http://localhost:3000/api/teacher/lessons/${id}`, {
+        const result = await axios.post(`http://localhost:3000/api/lesson`, {
           name: newLesson.promo,
           subject: newLesson.subject.id,
           start: newLesson.start,
           end: newLesson.end
+        })
+        const lessonsId = lessons.map(l => l.id)
+        const resultTeacher = await axios.patch(`http://localhost:3000/api/teacher/${id}`, {
+          lessons : [...lessonsId, result.data.result._id]
         })
         setLessons([...lessons, { id: `${result.data.result._id}`, title: `${newLesson.subject.name} / ${newLesson.promo}`, start: newLesson.start, end: newLesson.end }])
       } catch (error) {
@@ -195,7 +186,7 @@ const Calendar = (): ReactElement => {
       </>
     )
   } else {
-    return <Spinner animation="border" variant="primary" />
+    return <div style={{ display:"flex", alignItems:"center", justifyContent:"center", height:"50vh" }}><Spinner animation="border" variant="primary" style={{ width:"100px", height:"100px" }} /></div>
   }
 
 }
