@@ -1,25 +1,28 @@
 import express from 'express';
 import mongoose from 'mongoose';
+// import cors from 'cors';
 import AdminMemberController from './controllers/AdminMemberController';
 import PromoController from './controllers/PromoController';
 import SubjectsController from './controllers/SubjectsController';
 import StudentController from './controllers/StudentsController';
 import TeacherController from './controllers/TeacherController';
 import LessonController from './controllers/LessonController';
-
+const cors = require('cors')
 
 const app = express();
+app.use(cors());
 
 // mettre votre port mDB et le nom de votre BDD locale
-mongoose.connect('mongodb://localhost:27017/schoolHome', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-    autoIndex: true,
+mongoose.connect('mongodb://127.0.0.1:27017/home', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+  autoIndex: true,
 }).then(() => console.log("DB Connected"))
 // Middleware
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cors());
 
 //Subject API
 app.post('/api/subject', SubjectsController.create);
@@ -76,4 +79,4 @@ app.put('/api/lesson/:lessonId', LessonController.update)
 
 
 // mettre votre port local
-app.listen(8888, () => console.log('app is running'));
+app.listen(3000, () => console.log('app is running'));
