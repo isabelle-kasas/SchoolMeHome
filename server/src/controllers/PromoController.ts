@@ -1,6 +1,8 @@
 
 import {Request, Response} from 'express';
 import Promo from '../models/Schema/Promo';
+import Teacher from "../models/Schema/Teacher";
+import {arrayNotEmpty} from "class-validator";
 
 
 export = {
@@ -42,4 +44,19 @@ export = {
                 res.json({result: promo});
             });
     },
+    promoHasLesson: async (req: Request, res: Response): Promise<void> => {
+        await Promo.find()
+            .populate("students")
+            .populate("lessons")
+            .then((promos: any[]) => {
+                const promoWithLessons= promos.filter((lesson) =>
+                    arrayNotEmpty(lesson.lessons)
+                )
+                if (arrayNotEmpty(promoWithLessons)) {
+                    res.json({result: promoWithLessons});
+                } else {
+                    res.json({result: []});
+                }
+            });
+    }
 }
