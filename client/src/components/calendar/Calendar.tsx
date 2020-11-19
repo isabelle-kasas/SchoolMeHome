@@ -7,17 +7,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 
-const intervenant = [
-  {
-    name: 'M Dupont',
-    id: '1'
-  },
-  {
-    name: 'M Simpson',
-    id: '2'
-  },
-]
-
 const Calendar = (): ReactElement => {
   const [intervenant, setIntervenant] = useState<any>([]);
   const getTeachers = async () => {
