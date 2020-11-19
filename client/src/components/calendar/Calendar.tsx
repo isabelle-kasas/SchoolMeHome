@@ -38,6 +38,31 @@ const Calendar = (): ReactElement => {
   const [subjects, setSubjects] = useState<{ name: string, _id: string }[]>();
   const [promos, setPromos] = useState<{ name: string }[]>();
 
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const resultSubject = await axios('http://localhost:3000/api/subject');
+  //       setSubjects(resultSubject.data.result);
+  //       const resultPromo = await axios('http://localhost:3000/api/promo');
+  //       setPromos(resultPromo.data.result);
+  //       const resultLessons = await axios('http://localhost:3000/api/lesson');
+  //       console.log(resultSubject)
+  //       setLessons(resultLessons.data.result.map((d: any): EventInput => {
+  //         return ({
+  //           id: d._id,
+  //           title: `${resultSubject.data.result.find((s: any) => d.subject === s._id).name} / ${d.name}`,
+  //           start: d.start,
+  //           end: d.end
+  //         })
+  //       }))
+  //       setNewLesson({ ...newLesson, subject: { name: resultSubject.data.result[0].name, id: resultSubject.data.result[0]._id }, promo: resultPromo.data.result[0].name })
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, [])
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -47,10 +72,10 @@ const Calendar = (): ReactElement => {
         setPromos(resultPromo.data.result);
         const resultLessons = await axios('http://localhost:3000/api/lesson');
         setLessons(resultLessons.data.result.map((d: any): EventInput => {
-          console.log(d)
+          console.log(resultSubject.data.result, d.subject)
           return ({
             id: d._id,
-            title: `${resultSubject.data.result.find((s: any) => d.subject === s._id).name} / ${d.name}`,
+            title: `${resultSubject.data.result.find((s: any) => d.subject._id === s._id).name} / ${d.name}`,
             start: d.start,
             end: d.end
           })
