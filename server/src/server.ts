@@ -6,12 +6,13 @@ import SubejctsController from './controllers/SubjectsController';
 import StudentController from './controllers/StudentsController';
 import TeacherController from './controllers/TeacherController';
 import LessonController from './controllers/LessonController';
-
+const cors = require('cors')
 
 const app = express();
+app.use(cors());
 
 // mettre votre port mDB et le nom de votre BDD locale
-mongoose.connect('mongodb://localhost:27017/home', {
+mongoose.connect('mongodb://127.0.0.1:27017/home', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
