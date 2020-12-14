@@ -61,26 +61,18 @@ function IntervenantListCalendar (){
 
 
 function PromotionListCalendar (){
-    const [promotions, setPromotions] = useState<any[]>([]);
-    const getPromotions = async () => {
-        const resultList = await Axios.get('http://localhost:3000/api/lesson');
-        console.log(resultList.data.result);
-        const lessons = resultList.data.result;
-        const results:any[] = [];
-        for(const lesson of lessons ){
-            if (results.find(result => result === lesson.name) === undefined){
-                results.push(lesson.name)
-            }
-        }
-        console.log(results);
-        setPromotions(results);
-    }
-    useEffect(() => {
-        getPromotions();
-    }, [])
-    return(
-        <CardColumns>
-                    {promotions.map( (name, key) => (<CardCalendarList name={name}></CardCalendarList>))}
-        </CardColumns>
-    )
+  const [promotions, setPromotions] = useState([]);
+  const getPromotions = async () => {
+      const resultList = await Axios.get('http://localhost:3000/api/promo/has_lesson')
+      console.log(resultList.data.result);
+      setPromotions(resultList.data.result);
+  }
+  useEffect(() => {
+      getPromotions();
+  }, [])
+  return(
+      <CardColumns>
+          {promotions.map( ({name, _id}, key) => (<CardCalendarList name={name} id={_id}></CardCalendarList>))}
+      </CardColumns>
+  )
 }
