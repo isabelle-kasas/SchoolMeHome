@@ -43,10 +43,11 @@ h2{
 }
 .card-columns{
   margin: 12px;
+  column-count: 4 !important;
 }
 .card-columns .card{
   margin: 12px;
-} 
+}
 
 .btn-mediumlight a {
   color: white;
@@ -55,3 +56,4 @@ h2{
   color: white;
   text-decoration: none;
 }
+
