@@ -39,7 +39,7 @@ export = {
         const promoId = req.params.promoId
         await Promo.findOne({"_id": promoId})
             .populate("students", "user _id")
-            .polygon("lessons")
+            // .populate("lessons", "_id")
             .then((promo) => {
                 res.json({result: promo});
             });
@@ -53,5 +53,20 @@ export = {
             .then((lessons) => {
                 res.json({result: lessons});
             });
-    }
+    },
+    promoHasLesson: async (req: Request, res: Response): Promise<void> => {
+      await Promo.find()
+          .populate("students")
+          .populate("lessons")
+          .then((promos: any[]) => {
+              const promoWithLessons= promos.filter((lesson) =>
+                  arrayNotEmpty(lesson.lessons)
+              )
+              if (arrayNotEmpty(promoWithLessons)) {
+                  res.json({result: promoWithLessons});
+              } else {
+                  res.json({result: []});
+              }
+          });
+  }
 }
