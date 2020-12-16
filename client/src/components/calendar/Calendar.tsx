@@ -11,10 +11,10 @@ const Calendar = (): ReactElement => {
   const [intervenant, setIntervenant] = useState<any>([]);
   const getTeachers = async () => {
     try {
-        const resultList = await axios.get('http://localhost:3000/api/teacher');
-        setIntervenant(resultList.data.result);
+      const resultList = await axios.get('http://localhost:3000/api/teacher');
+      setIntervenant(resultList.data.result);
     } catch (error) {
-        console.log(error)
+      console.log(error)
     }
   }
 
@@ -33,17 +33,18 @@ const Calendar = (): ReactElement => {
     promo: ''
   })
   const [show, setShow] = useState<Boolean>(false);
-  const [subjects, setSubjects] = useState<{ name: string, _id: string }[]>();
-  const [promos, setPromos] = useState<{ name: string }[]>();
+  const [subjects, setSubjects] = useState<{ name: string, _id: string }[]>([]);
+  const [promos, setPromos] = useState<{ _id: string, name: string }[]>([]);
   let { id }: { id: string } = useParams();
-  let prof:any = intervenant.find((i: any) => id === i._id);
+  let prof: any = intervenant.find((i: any) => id === i._id);
 
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log(process.env.REACT_APP_API_URL)
       try {
         getTeachers();
-        const resultSubject = await axios('http://localhost:3000/api/subject');
+        const resultSubject = await axios(`${process.env.REACT_APP_API_URL}/api/subject`);
         setSubjects(resultSubject.data.result);
         const resultPromo = await axios('http://localhost:3000/api/promo');
         setPromos(resultPromo.data.result);
@@ -82,9 +83,17 @@ const Calendar = (): ReactElement => {
           start: newLesson.start,
           end: newLesson.end
         })
+        // console.log(result.data.result.name)
         const lessonsId = lessons.map(l => l.id)
         const resultTeacher = await axios.patch(`http://localhost:3000/api/teacher/${id}`, {
-          lessons : [...lessonsId, result.data.result._id]
+          lessons: [...lessonsId, result.data.result._id]
+        })
+        const promoId = promos.find(p => p.name === result.data.result.name)?._id;
+        const resultPromo = await axios(`http://localhost:3000/api/promo/${promoId}`)
+        // console.log(resultPromo.data.result.lessons)
+        const existPromosId = resultPromo.data.result.lessons
+        await axios.patch(`http://localhost:3000/api/promo/${promoId}`, {
+          lessons: [...existPromosId, result.data.result._id]
         })
         setLessons([...lessons, { id: `${result.data.result._id}`, title: `${newLesson.subject.name} / ${newLesson.promo}`, start: newLesson.start, end: newLesson.end }])
       } catch (error) {
@@ -112,8 +121,8 @@ const Calendar = (): ReactElement => {
     }
     fetchData()
   }
-  
-  if (subjects && promos) {
+
+  if (subjects.length > 0 && promos.length > 0) {
     return (
       <>
         <Breadcrumb>
@@ -186,7 +195,7 @@ const Calendar = (): ReactElement => {
       </>
     )
   } else {
-    return <div style={{ display:"flex", alignItems:"center", justifyContent:"center", height:"50vh" }}><Spinner animation="border" variant="primary" style={{ width:"100px", height:"100px" }} /></div>
+    return <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "50vh" }}><Spinner animation="border" variant="primary" style={{ width: "100px", height: "100px" }} /></div>
   }
 
 }
