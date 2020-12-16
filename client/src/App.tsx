@@ -7,6 +7,7 @@ import Calendar from './components/calendar/Calendar';
 import { AuthContext, useAuth } from './context/authContext'
 import PrivateRoute from './components/privateRoute/PrivateRoute'
 import './App.css';
+import { Navbar } from './components/navbar/navbar';
 
 function App() {
   const { token } = useAuth()
