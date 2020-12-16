@@ -5,64 +5,69 @@
     background: var(--primary);
     transition: width 600ms ease;
 }
- .navbar-nav{
-     list-style: none;
-     padding: 0;
-     margin: 0;
-     display: flex;
-     flex-direction: column;
+.navbar-nav{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
     align-items: center;
     height: 100%;
- }
+}
 
- .avatar{
-     margin-top: 1rem;
-     width: 100%;
- }
+.avatar{
+    margin-top: 1rem;
+    width: 100%;
+}
 
- .avatarImg{
-     width: 4rem;
- }
- .avatarName{
+.avatarImg{
+    width: 4rem;
+    margin: 0 auto;
+    flex-grow: 0;
+}
+.avatarName{
     display: none;
     margin-left: 1rem;
- }
+}
 
- .nav-item{
-     width: 100%;
- }
+.nav-item{
+    width: 100%;
+}
 
- .nav-item:last-child{
-     margin-top: auto;
- }
+.nav-item:last-child{
+    margin-top: auto;
+}
 
- .nav-link{
-     display: flex;
-     align-items: center;
-     height: 5rem;
-     color: white;
-     text-decoration: none;
+.nav-link{
+    display: flex;
+    align-items: center;
+    height: 5rem;
+    color: white;
+    text-decoration: none;
     transition: var(--transition-speed);
- }
+}
 
- .nav-link:hover{
-     color: var(--accent);
- }
+.nav-link:hover{
+    color: var(--accent);
+}
 
- .link-text{
-     display: none;
-     margin-left: 1rem;
- }
+.link-text{
+    display: none;
+    margin-left: 1rem;
+}
 
- .nav-link svg{
-     min-width: 2rem;
-     margin: 0 1.5rem;
- }
+.nav-link svg{
+    min-width: 2rem;
+    margin: 0 1.5rem;
+}
+.svgWidth{
+    width: 3rem;
+}
 
 
 
  /* small screen */
- @media only screen and (max-width: 600px){
+@media only screen and (max-width: 600px){
     .navbar{
         bottom: 0;
         width: 100vw;
@@ -74,7 +79,7 @@
     .nav-link{
         justify-content: center;
     }
- }
+}
 
  /* large screen */
 @media only screen and (min-width : 600px){
