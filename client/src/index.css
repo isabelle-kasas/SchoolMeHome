@@ -1,57 +1,52 @@
-body {
+:root{
+  font-size: 16px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  --primary : #30475e;
+  --accent : #f05454;
+  --primary-light : #78b2eb opacity(33%);
+  --primary-dark:  #233445;
+  --alternative-primary-light: #66d6d3 opacity(33%);
+  --accent-dark : #be4343;
+  --radius-bg : 40px;
+  --radius-common-button: 16px;
+  --transition-speed: 600ms;
+  --color-text-on-accent : white;
+  --color-text-on-primary: white;
+
+}
+
+body{
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  background: var(--primary);
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body::-webkit-scrollbar{
+  width: 0.5rem;
+}
+body::-webkit-scrollbar-track{
+  background: var(--primary);
+}
+body::-webkit-scrollbar-thumb{
+  background: var(--accent);
 }
 
-h1{
-  margin-top: 20px;
+main{
+  margin: 1rem 1rem 1rem 5rem;
+  padding: 1rem;
+  background: white;
+  border-radius: 16px;
+  height: calc(100vh - 4rem);
+  overflow: auto;
 }
 
-h2{
-  margin-top: 20px;
+main::-webkit-scrollbar{
+  width: 0.5rem;
+}
+main::-webkit-scrollbar-track{
+  background: var(--primary);
+}
+main::-webkit-scrollbar-thumb{
+  background: var(--accent);
 }
 
-.breadcrumb{
-  background-color: #e8e8e8;
-}
-
-.breadcrumb li a{
-  color: #f05454;
-}
-
-.breadcrumb-item.active {
-  color: #30475e;
-}
-
-#form {
-  margin: auto;
-  margin-top: 5%;
-  max-width: 500px;
-}
-
-.card img{
-  margin: 12px;
-}
-.card-columns{
-  margin: 12px;
-}
-.card-columns .card{
-  margin: 12px;
-} 
-
-.btn-mediumlight a {
-  color: white;
-}
-.btn-mediumlight a:hover {
-  color: white;
-  text-decoration: none;
-}
