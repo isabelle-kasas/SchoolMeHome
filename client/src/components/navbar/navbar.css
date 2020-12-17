@@ -83,7 +83,7 @@
     width: 3rem;
 }
 
-.active::before{
+.nav-link.active::before{
     content:"";
     width: 5rem;
     height: 4rem;
