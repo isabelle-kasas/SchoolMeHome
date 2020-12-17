@@ -22,23 +22,39 @@
   align-items: center;
 }
 
-.button-template {
-  border-radius: var(--radius-common-button) !important;
-  padding: 0.75rem !important;
-  font-size: 1.25rem !important;
-  color: var(--color-text-on-accent) !important;
-  background-color: var(--accent) !important;
-}
-
 .login-main-container {
   display: flex;
   width: 100%;
+  height: calc(100% - 59px);
 }
 
 .login-left-container {
-  width: 55%;
+  width: 60%;
+}
+
+.login-left-container h1 {
+  letter-spacing:6px;
+  margin-top: 150px;
+  margin-left: 150px;
+  color: var(--primary);
+  font-size: 4rem;
 }
 
 .login-right-container {
-
+  width: 38%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+.login-form-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* .login-form-container :nth-child(1n) {
+  margin-bottom: 20px;
+
+} */

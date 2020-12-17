@@ -9,11 +9,12 @@ import { Navbar } from './components/navbar/navbar';
 
 function App() {
   const { token } = useAuth()
+  console.log(window.location.pathname)
   return (
     <AuthContext.Provider value={{ token }}>
       <div className="App">
       {/* <Navbar></Navbar> */}
-        <main>
+        <main className={window.location.pathname === "/login" ? "main-login" : ""}>
           <Router>
             <Switch>
               <Route exact path="/login">
