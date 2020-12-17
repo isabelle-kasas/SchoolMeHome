@@ -6,7 +6,7 @@ import Promo from "../Class/Promo";
 const Schema = mongoose.Schema;
 
 const TeacherSchema = new Schema({
-    user: {firstName: String, lastName: String, email : String},
+    user: {firstName: String, lastName: String, email : String, password: String},
     subject: [{type: Schema.Types.ObjectId, ref: "Subject"}],
     lessons: [{type: Schema.Types.ObjectId, ref: "Lesson"}],
     promo: [{type: Schema.Types.ObjectId, ref: "Promo"}],
