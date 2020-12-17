@@ -2,7 +2,8 @@ import React from 'react'
 import { useAuth } from '../../context/authContext'
 import { Redirect, NavLink } from 'react-router-dom'
 import './Login.css'
-import Button from '@material-ui/core/Button';
+import Button from '@material-ui/core/Button'
+
 
 
 const Login = () => {
@@ -18,6 +19,7 @@ const Login = () => {
     )
   } else {
     return (
+      <div className="main-login-page">
       <div className="login-page">
         <nav className="login-nav-container">
           <div>
@@ -41,6 +43,7 @@ const Login = () => {
             </form>
           </div>
         </div>
+      </div>
       </div>
     )
   }
