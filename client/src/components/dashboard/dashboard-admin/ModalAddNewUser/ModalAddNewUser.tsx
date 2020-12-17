@@ -3,13 +3,22 @@ import React, {ReactElement} from "react";
 import AdminRepository from "../../../../repositories/AdminRepository";
 import {Modal} from "@material-ui/core";
 
-
-const addNewUser = (): void => {
-    new AdminRepository().addNewUser()
+const ModalAddNewUser = () => {
+  return (
+    <div>
+      
+    </div>
+  )
 }
 
-const ModalAddNewUser = (): ReactElement => {
+export default ModalAddNewUser
+
+// const addNewUser = (): void => {
+//     new AdminRepository().addNewUser()
+// }
+
+// const ModalAddNewUser = (): ReactElement => {
 
 
-    return()
-}
+//     return()
+// }
