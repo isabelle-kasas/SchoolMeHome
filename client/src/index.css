@@ -38,8 +38,11 @@ main{
   border-radius: 16px;
   height: calc(100vh - 4rem);
   overflow: auto;
+  /* firefox scrollbar */
+  scrollbar-color: var(--accent) var(--primary);
 }
 
+/* autres scrollbar */
 main::-webkit-scrollbar{
   width: 0.5rem;
 }

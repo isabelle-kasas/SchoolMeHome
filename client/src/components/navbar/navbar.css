@@ -22,12 +22,16 @@
 
 .avatarImg{
     width: 4rem;
-    margin: 0 auto;
+    margin: 0 0.5rem;
     flex-grow: 0;
 }
 .avatarName{
     display: none;
     margin-left: 1rem;
+}
+
+.avatarStudy{
+    line-height: 0%;
 }
 
 .nav-item{
