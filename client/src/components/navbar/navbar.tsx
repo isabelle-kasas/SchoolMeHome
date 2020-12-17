@@ -14,9 +14,9 @@ export function Navbar() {
             <div className='avatar-div'>
               <img src={avatar} alt="avatar" className="avatarImg"/>
               <div className="avatarName">
-                <h1>John Doe</h1>
+                <h1>John&nbsp;Doe</h1>
                 <div className="avatarStudy">
-                  <p>Master 1</p>
+                  <p>Master&nbsp;1</p>
                 <p>Développement&nbsp;web</p>
                 </div>
               </div>

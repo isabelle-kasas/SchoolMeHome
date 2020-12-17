@@ -38,6 +38,7 @@
 .avatarName{
     display: none;
     margin-left: 1rem;
+    overflow: hidden;
 }
 
 .avatarStudy{
@@ -70,6 +71,7 @@
     display: none;
     margin-left: 1rem;
     z-index: 5;
+    overflow: hidden;
 }
 
 .nav-link svg{
