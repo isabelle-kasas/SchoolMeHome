@@ -41,9 +41,10 @@ const Calendar = (): ReactElement => {
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log(process.env.REACT_APP_API_URL)
       try {
         getTeachers();
-        const resultSubject = await axios('http://localhost:3000/api/subject');
+        const resultSubject = await axios(`${process.env.REACT_APP_API_URL}/api/subject`);
         setSubjects(resultSubject.data.result);
         const resultPromo = await axios('http://localhost:3000/api/promo');
         setPromos(resultPromo.data.result);
