@@ -1,30 +1,32 @@
 import React from 'react';
-import Header from './components/header/header';
-import GestionList from './components/gestionList/gestionList';
+import Login from './components/login/Login';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import NewCalendarForm from './components/calendar/newCalendarForm';
-import Calendar from './components/calendar/Calendar';
+import { AuthContext, useAuth } from './context/authContext'
+import PrivateRoute from './components/privateRoute/PrivateRoute'
 import './App.css';
+import './index.css'
+import { Navbar } from './components/navbar/navbar';
 
 function App() {
+  const { token } = useAuth()
   return (
-    <div className="App">
-      <Router>
-        <Header></Header>
-        
-        <Switch>
-          <Route path="/new">
-            <NewCalendarForm />
-          </Route>
-          <Route path="/calendar/:id">
-            <Calendar />
-          </Route>
-          <Route path="/">
-            <GestionList></GestionList>
-          </Route>
-        </Switch>
-      </Router>
-    </div>
+    <AuthContext.Provider value={{ token }}>
+      <div className="App">
+      {/* <Navbar></Navbar> */}
+        <main>
+          <Router>
+            <Switch>
+              <Route exact path="/login">
+                <Login />
+              </Route>
+              <PrivateRoute exact path="/">
+                Acceuil
+          </PrivateRoute>
+            </Switch>
+          </Router>
+        </main>
+      </div>
+    </AuthContext.Provider>
   );
 }
 
