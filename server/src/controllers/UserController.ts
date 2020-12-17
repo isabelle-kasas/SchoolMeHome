@@ -1,6 +1,7 @@
 import User from "../models/Schema/User";
 import {Application, Request, response, Response} from "express";
 import {UserService} from "../services/UserService";
+import { Auth } from "../services/auth.service";
 
 
 export const UserController = (app : Application) => {
@@ -10,7 +11,7 @@ export const UserController = (app : Application) => {
         res.send({success: true, result: user})
     },)
     app.get('/api/signin',  async (req:Request, res: Response) =>{
-        const user = await UserService.signin(req.body.email, req.body.password);
+        const user = await Auth.signin(req.body.email, req.body.password);
         res.send(user);
     })
     app.get('/api/user/:userId', async(req, res): Promise<void> => {
