@@ -19,6 +19,7 @@ const Login = () => {
     )
   } else {
     return (
+      <div className="main-login-page">
       <div className="login-page">
         <nav className="login-nav-container">
           <div>
@@ -42,6 +43,7 @@ const Login = () => {
             </form>
           </div>
         </div>
+      </div>
       </div>
     )
   }

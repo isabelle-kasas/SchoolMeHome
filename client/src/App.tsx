@@ -7,25 +7,54 @@ import './App.css';
 import './index.css'
 import { Navbar } from './components/navbar/navbar';
 
+
+
 function App() {
   const { token } = useAuth()
-  console.log(window.location.pathname)
+  const routes = [
+    {
+      path: "/dashboard",
+      exact: true,
+      main: () => <h2>Home Dashboard</h2>
+    },
+    {
+      path: "/profil",
+      exact: true,
+      main: () => <h2>Mon profil</h2>
+    },
+    {
+      path: "/cours",
+      exact: true,
+      main: () => <h2>Mes cours</h2>
+    }
+  ];
   return (
     <AuthContext.Provider value={{ token }}>
       <div className="App">
-      {/* <Navbar></Navbar> */}
-        <main className={window.location.pathname === "/login" ? "main-login" : ""}>
           <Router>
             <Switch>
               <Route exact path="/login">
                 <Login />
               </Route>
-              <PrivateRoute exact path="/">
-                Acceuil
-          </PrivateRoute>
+
+              <PrivateRoute path="/">
+                <Navbar/>
+                <main>
+                  <Switch>
+                  {routes.map((route, index) => (
+            
+                    <PrivateRoute
+                      key={index}
+                      path={route.path}
+                      exact={route.exact}
+                      children={route.main()}
+                    />
+                  ))}
+                  </Switch>
+                </main>
+              </PrivateRoute>
             </Switch>
           </Router>
-        </main>
       </div>
     </AuthContext.Provider>
   );
