@@ -11,8 +11,8 @@ export const useAuth = () => {
   const formSubmit = async (e: FormEvent) => {
     e.preventDefault();
     // try {
-      console.log(e)
-      setToken('Token-test')
+      // console.log(e)
+      // setToken('Token-test')
       localStorage.setItem('authToken', 'Token-test')
       // const result = await axios.post( `${process.env.REACT_APP_API_URL}/login`, { email, password });
       // if (result.data.success) {
