@@ -1,12 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useAuth } from '../../context/authContext'
 import { Redirect, NavLink } from 'react-router-dom'
 import './Login.css'
-import Button from '@material-ui/core/Button';
+import Button from '../global/button/Button';
+import Input from '../global/input/Input'
 
 
 const Login = () => {
   const { inputEmail, inputPassword, formSubmit, token } = useAuth()
+
+  useEffect(() => {
+    console.log(token)
+  }, [token])
+
 
   if (!!token) {
     return (
@@ -18,6 +24,7 @@ const Login = () => {
     )
   } else {
     return (
+      <div className="main-login-page">
       <div className="login-page">
         <nav className="login-nav-container">
           <div>
@@ -26,21 +33,22 @@ const Login = () => {
           </div>
           <div>
             <NavLink to="#" className="navlink-login">Sign in</NavLink>
-            <Button className="button-template">Sign Up</Button>
+            <Button>Sign Up</Button>
           </div>
         </nav>
         <div className="login-main-container">
           <div className="login-left-container">
-            <h1>SCHOOL ME HOME</h1>
+            <h1>SCHOOL ME <br/> HOME</h1>
           </div>
           <div className="login-right-container">
-            <form onSubmit={formSubmit}>
-              <input type="email" placeholder="email..." {...inputEmail} />
-              <input type="password" placeholder="password..." {...inputPassword} />
-              <input type="submit" />
+            <form onSubmit={formSubmit} className="login-form-container">
+              <Input style={{ marginBottom: "50px" }} type="email" placeholder="Enter email" {...inputEmail}/>
+              <Input style={{ marginBottom: "60px" }} type="password" placeholder="Enter password" {...inputPassword}/>
+              <Button type="submit">Sign in</Button>
             </form>
           </div>
         </div>
+      </div>
       </div>
     )
   }

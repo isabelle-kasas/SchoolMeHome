@@ -1,25 +1,32 @@
-import { createContext, useState, FormEvent } from 'react'
+import React, { createContext, useState, FormEvent, useContext, Dispatch } from 'react'
 import axios from 'axios'
 
-export const AuthContext = createContext({ token: null });
+export const AuthContext = createContext<any>({});
 
-export const useAuth = () => {
+export function AuthProvider({ children }: { children: JSX.Element }) {
   const [token, setToken] = useState<any>(localStorage.getItem('authToken'))
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
+  return <AuthContext.Provider value={{ token, setToken, email, setEmail, password, setPassword }}>{children}</AuthContext.Provider>;
+}
+
+export const useAuth = () => {
+
+  const { token, setToken, email, setEmail, password, setPassword } = useContext(AuthContext)
 
   const formSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    // try {
-      // console.log(e)
-      // setToken('Token-test')
-      localStorage.setItem('authToken', 'Token-test')
-      // const result = await axios.post( `${process.env.REACT_APP_API_URL}/login`, { email, password });
-      // if (result.data.success) {
-      // }
-    // } catch (error) {
-    //   console.error(error)
-    // }
+    try {
+      const result = await axios.post(`${process.env.REACT_APP_API_URL}/api/signin`, { email, password });
+      if (result.data.token) {
+        setToken(result.data.token)
+        localStorage.setItem('authToken', result.data.token)
+      } else {
+        alert('mauvais mdp')
+      }
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return {

@@ -1,6 +1,6 @@
 
 #http
-GET  http://localhost:3000/api/teacher HTTP/1.1
+GET  http://localhost:3000/api/localhost:3000/api/teacher HTTP/1.1
 
 
 ###
