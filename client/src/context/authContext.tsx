@@ -7,12 +7,14 @@ export function AuthProvider({ children }: { children: JSX.Element }) {
   const [token, setToken] = useState<any>(localStorage.getItem('authToken'))
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
-  return <AuthContext.Provider value={{ token, setToken, email, setEmail, password, setPassword }}>{children}</AuthContext.Provider>;
+  const [firstName, setFirstName] = useState<string>('')
+  const [lastName, setLastName] = useState<string>('')
+  return <AuthContext.Provider value={{ token, setToken, email, setEmail, password, setPassword, firstName, setFirstName,lastName, setLastName }}>{children}</AuthContext.Provider>;
 }
 
 export const useAuth = () => {
 
-  const { token, setToken, email, setEmail, password, setPassword } = useContext(AuthContext)
+  const { token, setToken, email, setEmail, password, setPassword, firstName, setFirstName,lastName, setLastName } = useContext(AuthContext)
 
   const formSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -20,6 +22,8 @@ export const useAuth = () => {
       const result = await axios.post(`${process.env.REACT_APP_API_URL}/api/signin`, { email, password });
       if (result.data.token) {
         setToken(result.data.token)
+        setFirstName(result.data.firstName)
+        setLastName(result.data.lastName)
         localStorage.setItem('authToken', result.data.token)
       } else {
         alert('mauvais mdp')
@@ -27,6 +31,15 @@ export const useAuth = () => {
     } catch (error) {
       console.error(error)
     }
+  }
+
+  const disconnect = () => {
+    setToken(null)
+    setFirstName(null)
+    setLastName(null)
+    setEmail(null)
+    setPassword(null)
+    localStorage.setItem('authToken', '')
   }
 
   return {
@@ -40,6 +53,9 @@ export const useAuth = () => {
     },
     token,
     setToken,
-    formSubmit
+    formSubmit,
+    firstName,
+    lastName,
+    disconnect
   }
 }
