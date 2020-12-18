@@ -6,11 +6,10 @@ import PrivateRoute from './components/privateRoute/PrivateRoute'
 import './App.css';
 import './index.css'
 import { Navbar } from './components/navbar/navbar';
-
-
+import { AuthProvider } from './context/authContext'
 
 function App() {
-  const { token } = useAuth()
+
   const routes = [
     {
       path: "/dashboard",
@@ -29,20 +28,18 @@ function App() {
     }
   ];
   return (
-    <AuthContext.Provider value={{ token }}>
+    <AuthProvider>
       <div className="App">
-          <Router>
-            <Switch>
-              <Route exact path="/login">
-                <Login />
-              </Route>
-
-              <PrivateRoute path="/">
-                <Navbar/>
-                <main>
-                  <Switch>
+        <Router>
+          <Switch>
+            <Route exact path="/login">
+              <Login />
+            </Route>
+            <PrivateRoute path="/">
+              <Navbar />
+              <main>
+                <Switch>
                   {routes.map((route, index) => (
-            
                     <PrivateRoute
                       key={index}
                       path={route.path}
@@ -50,14 +47,48 @@ function App() {
                       children={route.main()}
                     />
                   ))}
-                  </Switch>
-                </main>
-              </PrivateRoute>
-            </Switch>
-          </Router>
+                </Switch>
+              </main>
+            </PrivateRoute>
+          </Switch>
+        </Router>
       </div>
-    </AuthContext.Provider>
+    </AuthProvider>
   );
 }
 
 export default App;
+
+
+
+
+
+
+
+
+
+
+{/* <AuthContext.Provider value={{ token }}>
+<div className="App">
+  <Router>
+    <Switch>
+      <Route exact path="/login">
+        <Login />
+      </Route>
+      <Navbar />
+
+      {routes.map((route, index) => (
+        <main>
+          <PrivateRoute
+            key={index}
+            path={route.path}
+            exact={route.exact}
+            children={route.main()}
+          />
+        </main>
+      ))}
+
+    </Switch>
+  </Router>
+</div>
+</AuthContext.Provider> */}
