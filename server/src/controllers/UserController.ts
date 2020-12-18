@@ -12,9 +12,9 @@ export const UserController = (app : Application) => {
     });
 
     app.post('/api/signin',  async (req:Request, res: Response) =>{
-      const user = await Auth.signin(req.body.email, req.body.password);
-      res.send(user);
-  });
+        const user = await Auth.signin(req.body.email, req.body.password);
+        res.send(user);
+    });
     app.get('/api/user/:userId', async(req, res): Promise<void> => {
         const user = await UserService.getById(req.params.userId);
         res.send({result: user});

@@ -4,9 +4,11 @@ import { FaUser, FaSignOutAlt, FaBook } from "react-icons/fa";
 import { MdDashboard } from "react-icons/md";
 import avatar from '../../image/unnamed.gif';
 import { Link, NavLink } from "react-router-dom";
+import { useAuth } from "../../context/authContext";
 
 
 export function Navbar() {
+  const { lastName, firstName, disconnect } = useAuth()
     return (
       <nav className="navbar">
         <ul className="navbar-nav">
@@ -14,7 +16,7 @@ export function Navbar() {
             <div className='avatar-div'>
               <img src={avatar} alt="avatar" className="avatarImg"/>
               <div className="avatarName">
-                <h1>John&nbsp;Doe</h1>
+                <h1>{firstName}&nbsp;{lastName}</h1>
                 <div className="avatarStudy">
                   <p>Master&nbsp;1</p>
                 <p>Développement&nbsp;web</p>
@@ -41,12 +43,12 @@ export function Navbar() {
             </NavLink>
             </li>
             <li className="nav-item">
-               <a href="/" className="nav-link">
+              <a className="nav-link" onClick={disconnect}>
               <FaSignOutAlt size={30}/>
               <span className="link-text">Se&nbsp;déconnecter</span>
             </a>
             </li>
-           
+          
           
         </ul>
         
