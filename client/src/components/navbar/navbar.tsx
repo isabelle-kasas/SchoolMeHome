@@ -2,7 +2,7 @@ import React from "react";
 import "./navbar.css";
 import { FaUser, FaSignOutAlt, FaBook } from "react-icons/fa";
 import { MdDashboard } from "react-icons/md";
-import avatar from '../../image/profil.png';
+import avatar from '../../image/unnamed.gif';
 import { Link, NavLink } from "react-router-dom";
 
 
