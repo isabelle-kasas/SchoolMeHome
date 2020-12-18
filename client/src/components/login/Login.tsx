@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useAuth } from '../../context/authContext'
 import { Redirect, NavLink } from 'react-router-dom'
 import './Login.css'
@@ -8,6 +8,11 @@ import Input from '../global/input/Input'
 
 const Login = () => {
   const { inputEmail, inputPassword, formSubmit, token } = useAuth()
+
+  useEffect(() => {
+    console.log(token)
+  }, [token])
+
 
   if (!!token) {
     return (
