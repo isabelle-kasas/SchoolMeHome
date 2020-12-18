@@ -17,6 +17,7 @@
 
 .avatar{
     margin-top: 1rem;
+    margin-bottom: 2.1rem ;
     width: 100%;
 }
 
@@ -48,6 +49,7 @@
 
 .nav-item{
     width: 100%;
+    cursor: pointer;
 }
 
 .nav-item:last-child{
@@ -96,7 +98,7 @@
     transition: all 600ms ease;
 }
 .navbar:hover .active::before{
-    width: 14rem;
+    width: 16rem;
 }
 
 
@@ -123,7 +125,7 @@
         height: 100vh;
     }
     .navbar:hover{
-        width: 16rem;
+        width: 18rem;
     }
     .navbar:hover .link-text{
         display: inline;
