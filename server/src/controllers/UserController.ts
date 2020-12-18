@@ -9,7 +9,7 @@ export const UserController = (app : Application) => {
         const user = await UserService.signUp(req.body)
         res.send({success: true, result: user})
     },)
-    app.get('/api/signin',  async (req:Request, res: Response) =>{
+    app.post('/api/signin',  async (req:Request, res: Response) =>{
         const user = await UserService.signin(req.body.email, req.body.password);
         res.send(user);
     })
