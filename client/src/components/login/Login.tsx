@@ -9,25 +9,11 @@ import Snackbar from '@material-ui/core/Snackbar';
 
 
 const Login = () => {
-  const { inputEmail, inputPassword, formSubmit, token } = useAuth()
-
-  const [alert, setAlert] = useState(false)
-
-  useEffect(() => {
-    console.log(token)
-  }, [token])
+  const { inputEmail, inputPassword, formSubmit, token, alert, handleCloseMui } = useAuth()
 
   function Alert(props: any) {
     return <MuiAlert elevation={6} variant='filled' {...props} />;
   }
-
-  const handleCloseMui = (event: any, reason: any) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setAlert(false);
-  };
-
 
   if (!!token) {
     return (
