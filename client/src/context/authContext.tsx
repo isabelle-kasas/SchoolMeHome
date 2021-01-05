@@ -9,12 +9,13 @@ export function AuthProvider({ children }: { children: JSX.Element }) {
   const [password, setPassword] = useState<string>('')
   const [firstName, setFirstName] = useState<string>('')
   const [lastName, setLastName] = useState<string>('')
-  return <AuthContext.Provider value={{ token, setToken, email, setEmail, password, setPassword, firstName, setFirstName,lastName, setLastName }}>{children}</AuthContext.Provider>;
+  const [alert, setAlert] = useState<boolean>(false)
+  return <AuthContext.Provider value={{ token, setToken, email, setEmail, password, setPassword, firstName, setFirstName,lastName, setLastName, alert, setAlert }}>{children}</AuthContext.Provider>;
 }
 
 export const useAuth = () => {
 
-  const { token, setToken, email, setEmail, password, setPassword, firstName, setFirstName,lastName, setLastName } = useContext(AuthContext)
+  const { token, setToken, email, setEmail, password, setPassword, firstName, setFirstName,lastName, setLastName, alert, setAlert } = useContext(AuthContext)
 
   const formSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -26,7 +27,7 @@ export const useAuth = () => {
         setLastName(result.data.lastName)
         localStorage.setItem('authToken', result.data.token)
       } else {
-        alert('mauvais mdp')
+        setAlert(true)
       }
     } catch (error) {
       console.error(error)
@@ -42,6 +43,13 @@ export const useAuth = () => {
     localStorage.setItem('authToken', '')
   }
 
+  const handleCloseMui = (event: any, reason: any) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setAlert(false);
+  };
+
   return {
     inputEmail: {
       value: email,
@@ -56,6 +64,8 @@ export const useAuth = () => {
     formSubmit,
     firstName,
     lastName,
-    disconnect
+    disconnect, 
+    alert,
+    handleCloseMui
   }
 }
