@@ -20,7 +20,6 @@ export class UserController{
     public async signin(@Arg('email') email: string, @Arg('password') password: string): Promise<AuthResult> {
         return await Auth.signin(email, password);
     }
-
     @Mutation(() => User, { nullable: true })
     public async lost(@Arg('email') email: string){
         return await UserService.lostPassword(email);
@@ -36,6 +35,6 @@ export class UserController{
     @Mutation(() => User)
     public async verifyToken(@Arg('token') token :string) :Promise<User>{
         return await Auth.verifyToken(token)
-       
     }
 }
+

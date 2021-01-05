@@ -1,26 +1,54 @@
-import { createContext, useState, FormEvent } from 'react'
+import React, { createContext, useState, FormEvent, useContext, Dispatch } from 'react'
 import axios from 'axios'
 
-export const AuthContext = createContext({ token: null });
+export const AuthContext = createContext<any>({});
 
-export const useAuth = () => {
+export function AuthProvider({ children }: { children: JSX.Element }) {
   const [token, setToken] = useState<any>(localStorage.getItem('authToken'))
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
+  const [firstName, setFirstName] = useState<string>('')
+  const [lastName, setLastName] = useState<string>('')
+  const [alert, setAlert] = useState<boolean>(false)
+  return <AuthContext.Provider value={{ token, setToken, email, setEmail, password, setPassword, firstName, setFirstName,lastName, setLastName, alert, setAlert }}>{children}</AuthContext.Provider>;
+}
+
+export const useAuth = () => {
+
+  const { token, setToken, email, setEmail, password, setPassword, firstName, setFirstName,lastName, setLastName, alert, setAlert } = useContext(AuthContext)
 
   const formSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    // try {
-      // console.log(e)
-      // setToken('Token-test')
-      localStorage.setItem('authToken', 'Token-test')
-      // const result = await axios.post( `${process.env.REACT_APP_API_URL}/login`, { email, password });
-      // if (result.data.success) {
-      // }
-    // } catch (error) {
-    //   console.error(error)
-    // }
+    try {
+      const result = await axios.post(`${process.env.REACT_APP_API_URL}/api/signin`, { email, password });
+      if (result.data.token) {
+        setToken(result.data.token)
+        setFirstName(result.data.firstName)
+        setLastName(result.data.lastName)
+        localStorage.setItem('authToken', result.data.token)
+      } else {
+        setAlert(true)
+      }
+    } catch (error) {
+      console.error(error)
+    }
   }
+
+  const disconnect = () => {
+    setToken(null)
+    setFirstName(null)
+    setLastName(null)
+    setEmail(null)
+    setPassword(null)
+    localStorage.setItem('authToken', '')
+  }
+
+  const handleCloseMui = (event: any, reason: any) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setAlert(false);
+  };
 
   return {
     inputEmail: {
@@ -33,6 +61,11 @@ export const useAuth = () => {
     },
     token,
     setToken,
-    formSubmit
+    formSubmit,
+    firstName,
+    lastName,
+    disconnect, 
+    alert,
+    handleCloseMui
   }
 }

@@ -3,9 +3,9 @@
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   --primary : #30475e;
   --accent : #f05454;
-  --primary-light : #78b2eb opacity(33%);
+  --primary-light : #78b2eb33;
   --primary-dark:  #233445;
-  --alternative-primary-light: #66d6d3 opacity(33%);
+  --alternative-primary-light: #66d6d333;
   --accent-dark : #be4343;
   --radius-bg : 40px;
   --radius-common-button: 16px;
@@ -31,7 +31,7 @@ body::-webkit-scrollbar-thumb{
   background: var(--accent);
 }
 
-main{
+main {
   margin: 1rem 1rem 1rem 5rem;
   padding: 1rem;
   background: white;
@@ -40,6 +40,10 @@ main{
   overflow: auto;
   /* firefox scrollbar */
   scrollbar-color: var(--accent) var(--primary);
+}
+
+.main-login {
+  margin: 1rem;
 }
 
 /* autres scrollbar */
