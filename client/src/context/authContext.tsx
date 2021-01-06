@@ -1,5 +1,4 @@
-import React, { createContext, useState, FormEvent, useContext, Dispatch, useEffect } from 'react'
-import axios from 'axios'
+import React, { createContext, useState, FormEvent, useContext } from 'react'
 import { gql, useMutation } from '@apollo/client'
 
 export const AuthContext = createContext<any>({});
@@ -46,6 +45,7 @@ export const useAuth = () => {
           setToken(result.token)
           setFirstName(result.user.firsName)
           setLastName(result.user.lastName)
+          setPassword(null)
           localStorage.setItem('authToken', result.token)
         } else {
           setAlert(true)
@@ -60,7 +60,6 @@ export const useAuth = () => {
     setFirstName(null)
     setLastName(null)
     setEmail(null)
-    setPassword(null)
     localStorage.setItem('authToken', '')
   }
 

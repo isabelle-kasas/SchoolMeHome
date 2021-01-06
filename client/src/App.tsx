@@ -28,7 +28,7 @@ function App() {
       main: () => <h2>Mes cours</h2>
     },
     {
-      path: "/cours/creation",
+      path: "/creation",
       exact: true,
       main: () => <SlideCreation />
     }
