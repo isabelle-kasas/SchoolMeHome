@@ -1,29 +1,32 @@
 import {UserService} from "../services/UserService";
 import { Auth } from "../services/AuthService";
 import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from "type-graphql";
-import { User } from '../models/Class/User';
-import { AuthResult } from '../models/Class/AuthResult';
+import { User } from '../entities/User';
+import { AuthResult } from '../entities/AuthResult';
 
 @Resolver(() => User)
 export class UserController{
     @Query(() => User)
     @Authorized()
     public async authenticatedUser(@Ctx() ctx): Promise<User> {
+        console.log(ctx.user);
         return ctx.user;
     }
+
     @Mutation(() => User)
     public async signup(@Arg('data', () => User) data: User): Promise<User> {
         return await UserService.signUp(data);
     };
 
     @Mutation(() => AuthResult, { nullable: true })
-    public async signin(@Arg('email') email: string, @Arg('password') password: string): Promise<AuthResult> {
-        return await Auth.signin(email, password);
+    public async signin(@Arg('email') email: string, @Arg('password') password: string, @Ctx() ctx): Promise<AuthResult> {
+        return await Auth.signin(email, password, ctx);
     }
     @Mutation(() => User, { nullable: true })
     public async lost(@Arg('email') email: string){
         return await UserService.lostPassword(email);
     }
+    @Authorized(['Admin'])
     @Query(() => User)
     public async getOne(@Arg('email') email: string){
         return await UserService.findByEmail(email);
@@ -37,7 +40,3 @@ export class UserController{
         return await Auth.verifyToken(token)
     }
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> cd81e9a825f97e82a6b7319f5ce3d07cdf3d67ab

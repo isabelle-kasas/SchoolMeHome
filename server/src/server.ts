@@ -1,7 +1,7 @@
 import 'reflect-metadata';
-import { AuthChecker, buildSchema } from "type-graphql";
+import { AuthChecker, buildSchema, Ctx } from "type-graphql";
 import { getModelForClass, mongoose } from '@typegoose/typegoose';
-import { User } from './models/Class/User';
+import { User } from './entities/User';
 import { ApolloServer } from 'apollo-server-express';
 import express from 'express';
 import cors from 'cors';
@@ -12,12 +12,17 @@ import {Auth}  from './services/AuthService'
 export const passwordAuthChecker: AuthChecker = async ({ context }: any, roles) => {
     try {
         const token = context.req.cookies.appSession;
-
         if (token) {
             const data = Auth.decodeToken(token);
             const model = getModelForClass(User);
             const user = await model.findById(data.userId);
             context.user = user;
+            console.log(user.role)
+            console.log(roles)
+            if(roles && !user.role){
+                console.log(roles)
+                return false;
+            }
             return true;
         } else {
             return false;
@@ -26,19 +31,18 @@ export const passwordAuthChecker: AuthChecker = async ({ context }: any, roles) 
         return false;
     }
 };
-
 (async () => {
     await mongoose.connect('mongodb://localhost:27017/', { useNewUrlParser: true, useUnifiedTopology: true, dbName: "home" });
 
     const schema = await buildSchema({
         resolvers: [UserController],
-        authChecker: passwordAuthChecker,
+        authChecker: passwordAuthChecker 
+
     });
 
     const server = new ApolloServer({
         schema,
         playground: true,
-        
         context: ({ req, res }) => ({ req, res })
     });
 

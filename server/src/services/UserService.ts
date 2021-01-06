@@ -1,17 +1,18 @@
 import * as argon from 'argon2'
-import { User } from '../models/Class/User';
+import { User } from '../entities/User';
 import { Arg, Mutation, Query, Resolver } from 'type-graphql';
 import { getModelForClass } from '@typegoose/typegoose';
 import { Auth } from './AuthService';
 import { userInfo } from 'os';
 
-@Resolver(() => User)
+
 export class UserServiceClass{
     
     @Mutation(() => User)
     public async signUp (newUser:User): Promise<User> {   
         const model = getModelForClass(User);
         newUser.password = await argon.hash(newUser.password);
+        console.log(newUser)
         return await model.create(newUser);    
     }
     

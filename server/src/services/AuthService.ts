@@ -2,23 +2,22 @@ import * as jwt from 'jsonwebtoken';
 import * as argon from 'argon2'
 import { UserService } from './UserService';
 import { getModelForClass } from '@typegoose/typegoose';
-import { User } from '../models/Class/User';
+import { User } from '../entities/User';
 import { Arg, Mutation } from 'type-graphql';
 import { Mail } from '../services/MailService';
-import { AuthResult } from '../models/Class/AuthResult';
+import { AuthResult } from '../entities/AuthResult';
 
 export class AuthService {
 
-    public async signin(email, password){
+    public async signin(email, password, ctx){
         const model = getModelForClass(User);
         const user = await model.findOne({ email });
         if (user && await argon.verify(user.password, password) === true) {
-            const UserToken = {userId: user.id, userEmail: user.email}
+            const UserToken = {userId: user.id};
             const token = jwt.sign(UserToken, "secret");
+            ctx.res.cookie('appSession', token, { maxAge: 60, httpOnly: true });
             return { token, user };
-        } else {
-            return null as any;
-        }
+        } 
     }
     @Mutation(() => AuthResult, {nullable : true})
     public async passwordLost(@Arg('email') email: string){
@@ -45,5 +44,6 @@ export class AuthService {
         }
         return null as any
     }
+    
 }
 export const Auth = new AuthService()
