@@ -1,6 +1,4 @@
-import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import React, {createContext, ReactElement, useState} from "react";
-import {Modal} from "@material-ui/core";
 import ModalAddNewUser, {UserFormData} from "./ModalAddNewUser/ModalAddNewUser";
 
 const userFormState = React.useState(new UserFormData());
@@ -13,9 +11,6 @@ export enum UserType {
 }
 
 const DashboardAdmin = (): ReactElement => {
-
-
-
     return (
         <UserFormContext.Provider value={userFormState}>
             <ModalAddNewUser userType={UserType.STUDENT}/>
