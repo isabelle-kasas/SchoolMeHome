@@ -1,12 +1,13 @@
 import React from 'react';
 import Login from './components/login/Login';
+import SlideCreation from './components/slideCreation/SlideCreation';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { AuthContext, useAuth } from './context/authContext'
 import PrivateRoute from './components/privateRoute/PrivateRoute'
 import './App.css';
 import './index.css'
 import { Navbar } from './components/navbar/navbar';
-import { AuthProvider } from './context/authContext'
+import { AuthProvider } from './context/authContext';
 
 function App() {
 
@@ -25,6 +26,11 @@ function App() {
       path: "/cours",
       exact: true,
       main: () => <h2>Mes cours</h2>
+    },
+    {
+      path: "/creation",
+      exact: true,
+      main: () => <SlideCreation />
     }
   ];
   return (

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const AddTeacherForm = () => {
+const AddAdminForm = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const AddTeacherForm = () => {
   )
 }
 
-export default AddTeacherForm
+export default AddAdminForm
