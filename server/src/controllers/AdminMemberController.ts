@@ -1,51 +1,46 @@
-import AdminMember from "../models/Schema/AdminMember";
+import AdminMember from "../entities/AdminMember";
 
 import {Request, Response} from 'express';
+import { getModelForClass } from "@typegoose/typegoose";
+import { Arg, Mutation } from "type-graphql";
+import { Resolver } from "dns";
+import { Query } from "mongoose";
 
 
-export = {
-    create: async (req: Request, res: Response):Promise<void> => {
-        await AdminMember.init()
-        const adminMember = new AdminMember(req.body);
-        res.json({success: true, result : await adminMember.save()})
-    },
-    read: async (req: Request, res: Response):Promise<void> => {
-        await AdminMember.find()
+export class AdminController{
+    @Mutation(() => AdminMember)
+    public async create(@Arg('data') data: AdminMember):Promise<AdminMember>{
+        const model = getModelForClass(AdminMember);
+        return await model.create(data)
+    }   
+        public async read (@Arg('data') data: AdminMember): Promise<AdminMember[]>{
+        const model = getModelForClass(AdminMember)
+        const AdminMembers = await model.find()
+            .populate("promo")
             .populate("lessons")
             .populate("subject")
-            .populate("teachers")
-            .populate("students")
+        return AdminMembers
+    }
+    public async patch (@Arg('data') data: AdminMember): Promise<AdminMember> {
+        const model = getModelForClass(AdminMember)
+        const teacher = await model.findOne({"_id": data._id})
+        Object.assign(teacher, data)
+        return await model.create()
+    }
+    public async  update(@Arg('data') data: AdminMember): Promise<AdminMember>{
+        const model = getModelForClass(AdminMember);
+        const teacherId = data._id
+        const teacher = await model.findOne({"_id": teacherId})
+        Object.assign(data._id, data)
+        return await model.create(teacher)
+    }
+    public async findOne(@Arg('data') data: AdminMember): Promise<AdminMember>{
+        const model = getModelForClass(AdminMember);
+        const teacherId = data._id
+        return await model.findOne({"_id": teacherId})
             .populate("promo")
-            .then((adminMembers) => {
-                res.json({result: adminMembers});
-            });
-    },
-    patch: async (req: Request, res: Response): Promise<void> => {
-        const adminId = req.params.adminId
-        const patchAdmin = req.body
-        const adminMember = await AdminMember.findOne({"_id": adminId})
-        Object.assign(adminMember, patchAdmin)
-        await adminMember?.save()
-        res.json({result: adminMember})
-    },
-    update: async (req: Request, res: Response): Promise<void> => {
-        const adminId = req.params.adminId
-        const updateAdmin = req.body
-        const adminMember = await AdminMember.findOne({"_id": adminId})
-        Object.assign(adminMember, updateAdmin)
-        await adminMember?.save()
-        res.json({result: adminMember})
-    },
-    findOne: async (req: Request, res: Response): Promise<void> => {
-        const adminId = req.params.adminId
-        await AdminMember.findOne({"_id": adminId})
             .populate("lessons")
             .populate("subject")
-            .populate("teachers")
-            .populate("students")
-            .populate("promo")
-            .then((adminMember) => {
-                res.json({result: adminMember});
-            });
-    },
+    }
+
 }
