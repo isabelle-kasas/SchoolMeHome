@@ -1,8 +1,8 @@
-import React, {ReactElement} from "react";
+import React, {createContext, ReactElement, useContext, useState} from "react";
 import AdminRepository from "../../../../repositories/AdminRepository";
 import CustomDialog from "../../../global/CustomDialog";
 import AddUserForm from "../../../global/form/AddUserForm";
-import {UserType} from "../DashboardAdmin";
+import {UserFormContext, UserType} from "../DashboardAdmin";
 
 
 const addNewUser = (userType: UserType): void => {
@@ -12,7 +12,6 @@ const addNewUser = (userType: UserType): void => {
 interface ModalAddNewUserProps {
     userType: UserType
 }
-
 
 const ModalAddNewUser = ({userType}: ModalAddNewUserProps): ReactElement => {
 
@@ -33,9 +32,11 @@ const ModalAddNewUser = ({userType}: ModalAddNewUserProps): ReactElement => {
     };
 
     const handlePositiveAction = (): void => {
-        addNewUser(userType)
-        handleClose()
+
+        addNewUser(userType);
+        handleClose();
     }
+
 
     return (
         <div>
@@ -51,6 +52,10 @@ const ModalAddNewUser = ({userType}: ModalAddNewUserProps): ReactElement => {
             </CustomDialog>
         </div>
     )
+}
+
+export class UserFormData {
+
 }
 
 export default ModalAddNewUser
