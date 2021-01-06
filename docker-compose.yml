@@ -1,0 +1,19 @@
+services:
+
+  client:
+    build: ./client
+    ports: 
+      - 3000:3000
+    volumes: 
+      - ./client/src:/app/src
+      - ./client/public:/app/public
+
+  server:
+    build: ./server
+    ports: 
+      - 4300:4300
+    volumes: 
+      - ./server/src:/app/src
+
+  mongodb:
+    image: mongo
