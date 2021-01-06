@@ -2,10 +2,11 @@ import React, {createContext, ReactElement, useContext, useState} from "react";
 import AdminRepository from "../../../../repositories/AdminRepository";
 import CustomDialog from "../../../global/CustomDialog";
 import AddUserForm from "../../../global/form/AddUserForm";
-import {UserType} from "../DashboardAdmin";
+import {UserFormContext, UserType} from "../DashboardAdmin";
 
 
-const addNewUser = (userFormData: UserFormData): void => {
+const addNewUser = (userFormData: UserFormData, userType: UserType): void => {
+    userFormData.userRole = userType
     new AdminRepository().addNewUser(userFormData)
 }
 
@@ -22,6 +23,7 @@ const ModalAddNewUser = ({userType}: ModalAddNewUserProps): ReactElement => {
     const DIALOG_NEGATIVE = "Annuler"
 
     const [open, setOpen] = React.useState(false);
+    const [userForm] = useContext(UserFormContext)
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -32,10 +34,9 @@ const ModalAddNewUser = ({userType}: ModalAddNewUserProps): ReactElement => {
     };
 
     const handlePositiveAction = (): void => {
-        addNewUser(userType);
+        addNewUser(userForm, userType);
         handleClose();
     }
-
 
     return (
         <div>
@@ -54,18 +55,39 @@ const ModalAddNewUser = ({userType}: ModalAddNewUserProps): ReactElement => {
 }
 
 export class UserFormData {
-    private firstName: String
-    private lastName: String
-    private email: String
-    private password: String
-    private userRole: number
+    private _firstName: String
+    private _lastName: String
+    private _email: String
+    private _password: String
+    private _userRole: number
+
+
+    set firstName(value: String) {
+        this._firstName = value;
+    }
+
+    set lastName(value: String) {
+        this._lastName = value;
+    }
+
+    set email(value: String) {
+        this._email = value;
+    }
+
+    set password(value: String) {
+        this._password = value;
+    }
+
+    set userRole(value: number) {
+        this._userRole = value;
+    }
 
     constructor(firstName: String, lastName: String, email: String, password: String, userRole: number) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-        this.userRole = userRole;
+        this._firstName = firstName;
+        this._lastName = lastName;
+        this._email = email;
+        this._password = password;
+        this._userRole = userRole;
     }
 }
 
