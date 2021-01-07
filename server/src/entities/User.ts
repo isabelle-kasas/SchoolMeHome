@@ -1,5 +1,5 @@
 import {  mongoose, prop } from "@typegoose/typegoose";
-import { IsEmail, Length } from "class-validator";
+import { IsEmail, IsIn, Length } from "class-validator";
 import { Field, InputType, ObjectType } from "type-graphql";
 
 @ObjectType('UserType')
@@ -29,6 +29,9 @@ export class User {
    @prop()
    password!: string;
 
-   token!: string;
+   @Field()
+   @prop()
+   @IsIn(['Admin', 'User'])
+   role!: string;
 }
 mongoose.set('useFindAndModify', false);
