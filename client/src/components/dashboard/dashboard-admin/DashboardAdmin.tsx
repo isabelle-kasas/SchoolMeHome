@@ -1,5 +1,7 @@
 import React, {createContext, Dispatch, ReactElement, SetStateAction} from "react";
 import ModalAddNewUser, {UserFormData} from "./ModalAddNewUser/ModalAddNewUser";
+import {Container} from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
 
 export const UserFormContext = createContext<any>({})
 
@@ -17,9 +19,19 @@ export const DashboardAdmin = (): ReactElement => {
 
     return (
         <UserFormContext.Provider value={useState}>
-            <ModalAddNewUser userType={UserType.STUDENT}/>
-            <ModalAddNewUser userType={UserType.TEACHER}/>
-            <ModalAddNewUser userType={UserType.CAMPUS_MANAGER}/>
+            <Container maxWidth="sm">
+                <Grid container justify="center" spacing={10}>
+                    <Grid item xs={12} sm={4}>
+                        <ModalAddNewUser userType={UserType.STUDENT}/>
+                    </Grid>
+                    <Grid item xs={12} sm={4}>
+                        <ModalAddNewUser userType={UserType.TEACHER}/>
+                    </Grid>
+                    <Grid item xs={12} sm={4}>
+                        <ModalAddNewUser userType={UserType.CAMPUS_MANAGER}/>
+                    </Grid>
+                </Grid>
+            </Container>
         </UserFormContext.Provider>
     )
 }

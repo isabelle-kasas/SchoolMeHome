@@ -11,6 +11,8 @@ import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import {TransitionProps} from "@material-ui/core/transitions";
 import Slide from "@material-ui/core/Slide";
+import {Container} from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
 
 
 const addNewUser = (userFormData: UserFormData, userType: UserType): void => {
@@ -54,16 +56,16 @@ const ModalAddNewUser = ({userType}: ModalAddNewUserProps): ReactElement => {
 
     return (
         <div>
-            <button onClick={handleClickOpen}>Open Modal</button>
-            <CustomDialog open={open}
-                          handleClose={handleClose}
-                          handlePositiveAction={handlePositiveAction}
-                          dialogTitle={DIALOG_TITLE}
-                          dialogContent={DIALOG_CONTENT}
-                          positiveButton={DIALOG_POSITIVE}
-                          negativeButton={DIALOG_NEGATIVE}>
-                <AddUserForm userType={userType}/>
-            </CustomDialog>
+             <button onClick={handleClickOpen}>Open Modal</button>
+                <CustomDialog open={open}
+                              handleClose={handleClose}
+                              handlePositiveAction={handlePositiveAction}
+                              dialogTitle={DIALOG_TITLE}
+                              dialogContent={DIALOG_CONTENT}
+                              positiveButton={DIALOG_POSITIVE}
+                              negativeButton={DIALOG_NEGATIVE}>
+                    <AddUserForm userType={userType}/>
+                </CustomDialog>
         </div>
     )
 }

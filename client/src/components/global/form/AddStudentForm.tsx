@@ -28,20 +28,29 @@ const AddStudentForm = (): ReactElement => {
         <>
             <TextField label="FirstName"
                        autoFocus
+                       id="standard-basic"
                        margin="dense"
                        fullWidth
+                       variant="filled"
+                       required
                        onChange={e => updateStudentData("FirstName", e.target.value)}/>
             <TextField label="LastName"
                        margin="dense"
                        fullWidth
+                       id="standard-basic"
+                       required
                        onChange={e => updateStudentData("LastName", e.target.value)}/>
             <TextField label="Email"
                        margin="dense"
                        fullWidth
+                       id="standard-basic"
+                       required
                        onChange={e => updateStudentData("Email", e.target.value)}/>
             <TextField label="Password"
                        margin="dense"
                        fullWidth
+                       id="standard-basic"
+                       required
                        onChange={e => updateStudentData("Password", e.target.value)}/>
         </>
 

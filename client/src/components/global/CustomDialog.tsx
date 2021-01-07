@@ -7,6 +7,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import Slide from "@material-ui/core/Slide";
 import {TransitionProps} from "@material-ui/core/transitions";
+import {TextField} from "@material-ui/core";
 
 interface CustomDialogProps {
     open: boolean,
@@ -33,14 +34,14 @@ const CustomDialog = (customDialogProps: CustomDialogProps): ReactElement => {
         event.preventDefault()
         isPositive ? customDialogProps.handlePositiveAction() : customDialogProps.handleClose()
     }
-
     return (
+
         <Dialog open={customDialogProps.open} onClose={customDialogProps.handleClose}
                 aria-labelledby="form-dialog-title"
                 TransitionComponent={Transition}>
-            <DialogTitle id="alert-dialog-slide-title">{customDialogProps.dialogTitle}</DialogTitle>
+            <DialogTitle id="form-dialog-title">{customDialogProps.dialogTitle}</DialogTitle>
             <DialogContent>
-                <DialogContentText id="alert-dialog-slide-description">
+                <DialogContentText>
                     {customDialogProps.dialogContent}
                 </DialogContentText>
                 {customDialogProps.children}
