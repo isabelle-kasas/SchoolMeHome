@@ -26,7 +26,7 @@ const SlideCreation = () => {
     slideListCopy.forEach(slide => slide.isActive = false)
     slideListCopy.filter((slide, i) => i === index)[0].isActive = true;
     setSlideList(slideListCopy)
-    setActiveContent(slideListCopy.find((slide, i) => i === index).content)
+    setActiveContent(slideListCopy.find((slide, i) => i === index)!.content)
   }
 
   return (
