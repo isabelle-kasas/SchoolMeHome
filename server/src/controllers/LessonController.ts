@@ -1,42 +1,47 @@
+import { getModelForClass } from '@typegoose/typegoose';
 import {Request, Response} from 'express';
-import Lesson from "../models/Schema/Lesson";
+import { Arg } from 'type-graphql';
+import {Lesson} from "../entities/Lesson";
 
 
-export = {
-    create: async (req: Request, res: Response): Promise<void> => {
-        await Lesson.init()
-        const lesson = new Lesson(req.body);
-        res.json({success: true, result: await lesson.save()})
-    },
-    read: async (req: Request, res: Response): Promise<void> => {
-        await Lesson.find()
+export class LessonController {
+    public async create(@Arg('data') data: Lesson): Promise<Lesson>{
+        const model =  getModelForClass(Lesson)
+        return await model.create(data)
+    }
+           public async read (@Arg('data') data: Lesson): Promise<Lesson[]>{
+        const model = getModelForClass(Lesson)
+        const Lessons = await model.find()
+            .populate("promo")
+            .populate("lessons")
             .populate("subject")
-            .then((lessons) => {
-                res.json({result: lessons});
-            });
-    },
-    patch: async (req: Request, res: Response): Promise<void> => {
-        const lessonId = req.params.lessonId
-        const patchLesson = req.body
-        const lesson = await Lesson.findOne({"_id": lessonId})
-        Object.assign(lesson, patchLesson)
-        await lesson?.save()
-        res.json({result: lesson})
-    },
-    update: async (req: Request, res: Response): Promise<void> => {
-        const lessonId = req.params.lessonId
-        const updateLesson = req.body
-        const lesson = await Lesson.findOne({"_id": lessonId})
-        Object.assign(lesson, updateLesson)
-        await lesson?.save()
-        res.json({result: lesson})
-    },
-    findOne: async (req: Request, res: Response): Promise<void> => {
-        const lessonId = req.params.lessonId
-        await Lesson.findOne({"_id": lessonId})
+        return Lessons
+    }
+    // A modifier normalement la méthode appel un findById
+    public async patch (@Arg('data') data: Lesson): Promise<Lesson> {
+        const model = getModelForClass(Lesson)
+        const lesson = await model.find({"name": data.name})
+        Object.assign(lesson, data)
+        return await model.create()
+    }
+    /*
+METHODES à modifierProblème avec ID
+    public async  update(@Arg('data') data: Lesson): Promise<Lesson>{
+        const model = getModelForClass(Lesson);
+        const lessonId = data._id
+        const lesson = await model.findOne({"_id": lessonId})
+        Object.assign(data._id, data)
+        return await model.create(Lesson)
+    }
+   
+
+    public async findOne(@Arg('data') data: Lesson): Promise<Lesson>{
+        const model = getModelForClass(Lesson);
+        const LessonId = data._id
+        return await model.findOne({"_id": LessonId})
+            .populate("promo")
+            .populate("lessons")
             .populate("subject")
-            .then((lesson) => {
-                res.json({result: lesson});
-            });
-    },
+    }
+     */
 }

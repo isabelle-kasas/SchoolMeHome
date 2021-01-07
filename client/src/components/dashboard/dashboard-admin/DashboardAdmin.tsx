@@ -11,7 +11,7 @@ export enum UserType {
     ADMIN,
 }
 
-const DashboardAdmin = (): ReactElement => {
+export const DashboardAdmin = (): ReactElement => {
 
     return (
         <ModalAddNewUser userType={UserType.STUDENT}/>

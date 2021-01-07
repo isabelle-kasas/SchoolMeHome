@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node-dev --respawn --transpile-only ./src/server.ts",
+    "start": "ts-node-dev --respawn  --inspect --transpile-only ./src/server.ts",
     "build": "tsc"
   },
   "keywords": [],
@@ -23,7 +23,8 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.14",
     "nodemailer": "^6.4.17",
-    "reflect-metadata": "^0.1.13"
+    "reflect-metadata": "^0.1.13",
+    "socket-io": "^1.0.0"
   },
   "devDependencies": {
     "@typegoose/typegoose": "^7.4.5",

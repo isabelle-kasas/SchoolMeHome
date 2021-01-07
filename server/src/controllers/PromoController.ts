@@ -1,72 +1,72 @@
 
 import {Request, Response} from 'express';
-import Promo from '../models/Schema/Promo';
-import Teacher from "../models/Schema/Teacher";
+import {Promo} from '../entities/Promo';
+import {Teacher} from "../entities/Teacher";
 import {arrayNotEmpty} from "class-validator";
+import { Arg, Mutation } from 'type-graphql';
+import { getModelForClass } from '@typegoose/typegoose';
 
 
-export = {
-    create: async (req: Request, res: Response):Promise<void> => {
-        await Promo.init() 
-        const newPromo = new Promo(req.body);
-        res.json({success: true, result : await newPromo.save()})
-    },
-    read: async (req: Request, res: Response):Promise<void> => {
-    await Promo.find()
-        .populate("students", "user _id")
-        .populate("lessons")
-        .then((promos) => {
-            res.json({result: promos});
-        });
-    },
-    patch: async (req: Request, res: Response): Promise<void> => {
-        const promoId = req.params.promoId
-        const patchPromo = req.body
-        const promo = await Promo.findOne({"_id": promoId})
-        Object.assign(promo, patchPromo)
-        await promo?.save()
-        res.json({result: promo})
-    },
-    update: async (req: Request, res: Response): Promise<void> => {
-        const promoId = req.params.promoId
-        const patchPromo = req.body
-        const promo = await Promo.findOne({"_id": promoId})
-        Object.assign(promo, patchPromo)
-        await promo?.save()
-        res.json({result: promo})
-    },
-    findOne: async (req: Request, res: Response): Promise<void> => {
-        const promoId = req.params.promoId
-        await Promo.findOne({"_id": promoId})
-            .populate("students", "user _id")
-            // .populate("lessons", "_id")
-            .then((promo) => {
-                res.json({result: promo});
-            });
-    },
-    promoLesson: async (req: Request, res: Response): Promise<void> => {
-        const promoId = req.params.promoId
-        await Promo.findOne({"_id": promoId})
+export class PromoController {
+
+    @Mutation(() => Promo)
+    public async  create(@Arg('data') data: Promo):Promise<Promo>{
+        const model = getModelForClass(Promo)
+        return await model.create(data)
+    }
+        public async read (@Arg('data') data: Teacher): Promise<Teacher[]>{
+        const model = getModelForClass(Teacher)
+        const teachers = await model.find()
+            .populate("promo")
+            .populate("lessons")
+            .populate("subject")
+        return teachers
+    }
+    public async patch (@Arg('data') data: Teacher): Promise<Teacher> {
+        const model = getModelForClass(Teacher)
+        const teacher = await model.findOne({"_id": data._id})
+        Object.assign(teacher, data)
+        return await model.create()
+    }
+    public async  update(@Arg('data') data: Teacher): Promise<Teacher>{
+        const model = getModelForClass(Teacher);
+        const teacherId = data._id
+        const teacher = await model.findOne({"_id": teacherId})
+        Object.assign(data._id, data)
+        return await model.create(teacher)
+    }
+    public async findOne(@Arg('data') data: Teacher): Promise<Teacher>{
+        const model = getModelForClass(Teacher);
+        const teacherId = data._id
+        return await model.findOne({"_id": teacherId})
+            .populate("promo")
+            .populate("lessons")
+            .populate("subject")
+    }
+    // Function à modifier car pas d'id dans promo... 
+    public async promoLesson(@Arg('data') data: Promo): Promise<Promo> {
+        const model = getModelForClass(Promo);
+        const promoId = data.name
+        return await model.findOne({"name": promoId})
             .populate("students", "user _id")
             .populate("lessons")
             .select("lessons")
-            .then((lessons) => {
-                res.json({result: lessons});
+    }
+    // Function à modifier... 
+    public async promoHasLesson(@Arg('data') data: Promo): Promise<Promo[]>{
+        const model = getModelForClass(Promo);
+        return await model.find()
+            .populate("students")
+            .populate("lessons")
+            .then((promos: Promo[]) => {
+                const promoWithLessons= promos.filter((lesson) =>
+                    arrayNotEmpty(lesson)
+                )
+                if (arrayNotEmpty(promoWithLessons)) {
+                    return promoWithLessons
+                } else {
+                    return null;
+                }
             });
-    },
-    promoHasLesson: async (req: Request, res: Response): Promise<void> => {
-      await Promo.find()
-          .populate("students")
-          .populate("lessons")
-          .then((promos: any[]) => {
-              const promoWithLessons= promos.filter((lesson) =>
-                  arrayNotEmpty(lesson.lessons)
-              )
-              if (arrayNotEmpty(promoWithLessons)) {
-                  res.json({result: promoWithLessons});
-              } else {
-                  res.json({result: []});
-              }
-          });
-  }
+    }
 }

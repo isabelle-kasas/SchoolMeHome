@@ -1,43 +1,44 @@
-import Subject from "../models/Schema/Subject";
+import {Subject} from "../entities/Subject";
 
 import {Request, Response} from 'express';
+import { getModelForClass } from "@typegoose/typegoose";
+import { Arg } from "type-graphql";
 
 
-export = {
-    create: async (req: Request, res: Response):Promise<void> => {
-        await Subject.init() 
-        const newSubject = new Subject(req.body);
-        res.json({success: true, result : await newSubject.save()})
-    },
-    read: async (req: Request, res: Response):Promise<void> => {
-    await Subject.find()
-        .then((subjects) => {
-            res.json({result: subjects});
-        });
-    },
-    patch: async (req: Request, res: Response): Promise<void> => {
-        const subjectId = req.params.subjectId
-        const patchSubject = req.body
-        const subject = await Subject.findOne({"_id": subjectId})
-        Object.assign(subject, patchSubject)
-        await subject?.save()
-        res.json({result: subject})
-    },
-    update: async (req: Request, res: Response): Promise<void> => {
-        const subjectId = req.params.subjectId
-        const updateSubject = req.body
-        const subject = await Subject.findOne({"_id": subjectId})
-        Object.assign(subject, updateSubject)
-        await subject?.save()
-        res.json({result: subject})
-    },
-    findOne: async (req: Request, res: Response): Promise<void> => {
-        const subjectId = req.params.subjectId
-        await Subject.findOne({"_id": subjectId})
-            .then((subject) => {
-                res.json({result: subject});
-            });
-    },
+export class SubjectController{
+       public async create(@Arg('data') data: Subject): Promise<Subject>{
+        const model =  getModelForClass(Subject)
+        return await model.create(data)
+    }
+    public async read (@Arg('data') data: Subject): Promise<Subject[]>{
+        const model = getModelForClass(Subject)
+        const subjects = await model.find()
+            .populate("promo")
+            .populate("lessons")
+            .populate("subject")
+        return subjects
+    }
+    // A Modifier pour les id
+    // public async patch (@Arg('data') data: Subject): Promise<Subject> {
+    //     const model = getModelForClass(Subject)
+    //     const student = await model.findOne({"_id": data._id})
+    //     Object.assign(student, data)
+    //     return await model.create()
+    // }
+    // public async  update(@Arg('data') data: Subject): Promise<Subject>{
+    //     const model = getModelForClass(Subject);
+    //     const subjectId = data._id
+    //     const student = await model.findOne({"_id": subjectId})
+    //     Object.assign(data._id, data)
+    //     return await model.create(student)
+    // }
+    // public async findOne(@Arg('data') data: Subject): Promise<Subject>{
+    //     const model = getModelForClass(Subject);
+    //     const subjectId = data._id
+    //     return await model.findOne({"_id": subjectId})
+    //         .populate("promo")
+    //         .populate("lessons")
+    //         .populate("subject")
+    // }
 
 }
- 
