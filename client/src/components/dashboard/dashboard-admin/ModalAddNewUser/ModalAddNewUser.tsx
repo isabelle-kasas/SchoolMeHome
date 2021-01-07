@@ -16,7 +16,6 @@ interface ModalAddNewUserProps {
 
 const ModalAddNewUser = ({userType}: ModalAddNewUserProps): ReactElement => {
 
-
     const DIALOG_TITLE = "Ajoutez un.e nouvel.le utilisateur (" + userType + ")"
     const DIALOG_CONTENT = "Remplissez le formulaire ci-dessous afin de créer un.e nouvel.le utilisateur"
     const DIALOG_POSITIVE = "Ajouter"

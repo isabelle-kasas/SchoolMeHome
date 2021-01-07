@@ -1,8 +1,7 @@
-import React, {createContext, ReactElement, useState} from "react";
+import React, {createContext, Dispatch, ReactElement, SetStateAction} from "react";
 import ModalAddNewUser, {UserFormData} from "./ModalAddNewUser/ModalAddNewUser";
 
-const userFormState = React.useState(new UserFormData("", "", "", "", -1));
-export const UserFormContext = createContext(userFormState)
+export const UserFormContext = createContext<any>({})
 
 export enum UserType {
     STUDENT,
@@ -11,8 +10,13 @@ export enum UserType {
 }
 
 const DashboardAdmin = (): ReactElement => {
+
+    //TODO: Create Custom Hook | export function
+    const [userFormState, setUserFormState] = React.useState(new UserFormData("", "", "", "", -1));
+    const useState = [userFormState, setUserFormState]
+
     return (
-        <UserFormContext.Provider value={userFormState}>
+        <UserFormContext.Provider value={useState}>
             <ModalAddNewUser userType={UserType.STUDENT}/>
             <ModalAddNewUser userType={UserType.TEACHER}/>
             <ModalAddNewUser userType={UserType.CAMPUS_MANAGER}/>
