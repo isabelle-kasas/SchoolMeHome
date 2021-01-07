@@ -1,10 +1,9 @@
 import { getModelForClass } from '@typegoose/typegoose';
-import {Request, Response} from 'express';
 import { Arg } from 'type-graphql';
 import {Lesson} from "../entities/Lesson";
 
 
-export class LessonController {
+export class LessonResolver {
     public async create(@Arg('data') data: Lesson): Promise<Lesson>{
         const model =  getModelForClass(Lesson)
         return await model.create(data)

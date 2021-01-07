@@ -29,9 +29,28 @@ export class User {
    @prop()
    password!: string;
 
-   @Field()
+   @Field({nullable : true})
    @prop()
-   @IsIn(['Admin', 'User'])
    role!: string;
+
 }
+@InputType('UserUpdate')
+export class UserUpdate{
+   @Field({nullable :  true})
+   @Length(2, 20)
+   @prop()
+   firstName?: string;
+
+   @Field({nullable : true})
+   @Length(3, 20)
+   @prop()
+   lastName?: string;
+   
+   @Field({nullable :  true})
+   @IsEmail()
+   @Length(3, 100)
+   @prop()
+   email?: string;
+}
+
 mongoose.set('useFindAndModify', false);
