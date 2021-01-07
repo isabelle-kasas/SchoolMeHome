@@ -7,6 +7,9 @@ services:
     volumes: 
       - ./client/src:/app/src
       - ./client/public:/app/public
+    environment: 
+      - REACT_APP_API_URL=http://localhost:4300
+    command: "npm run start"
 
   server:
     build: ./server
@@ -17,3 +20,8 @@ services:
 
   mongodb:
     image: mongo
+    volumes: 
+      - mongodata:/data/db
+
+volumes: 
+  mongodata:
