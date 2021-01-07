@@ -7,6 +7,7 @@ import './App.css';
 import './index.css'
 import { Navbar } from './components/navbar/navbar';
 import { AuthProvider } from './context/authContext'
+import {DashboardAdmin} from "./components/dashboard/dashboard-admin/DashboardAdmin";
 
 function App() {
 
@@ -14,7 +15,8 @@ function App() {
     {
       path: "/dashboard",
       exact: true,
-      main: () => <h2>Home Dashboard</h2>
+      // main: () => <h2>Home Dashboard</h2>
+      main: () => <DashboardAdmin />
     },
     {
       path: "/profil",

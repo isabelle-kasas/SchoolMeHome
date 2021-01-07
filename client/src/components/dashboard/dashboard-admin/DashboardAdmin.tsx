@@ -9,7 +9,7 @@ export enum UserType {
     CAMPUS_MANAGER,
 }
 
-const DashboardAdmin = (): ReactElement => {
+export const DashboardAdmin = (): ReactElement => {
 
     //TODO: Create Custom Hook | export function
     const [userFormState, setUserFormState] = React.useState(new UserFormData("", "", "", "", -1));

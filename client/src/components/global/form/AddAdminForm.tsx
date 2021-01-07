@@ -1,8 +1,8 @@
 import React from 'react'
-const AddTeacherForm = () => {
+const AddAdminForm = () => {
     return (
         <div>
         </div>
     )
 }
-export default AddTeacherForm
+export default AddAdminForm
