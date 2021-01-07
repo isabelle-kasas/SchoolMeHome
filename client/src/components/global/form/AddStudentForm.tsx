@@ -26,17 +26,22 @@ const AddStudentForm = (): ReactElement => {
 
     return (
         <>
-            <TextField id="outlined-basic" label="FirstName"
-                       defaultValue="First Name" variant="outlined"
+            <TextField label="FirstName"
+                       autoFocus
+                       margin="dense"
+                       fullWidth
                        onChange={e => updateStudentData("FirstName", e.target.value)}/>
-            <TextField id="outlined-basic" label="LastName"
-                       defaultValue="Last Name" variant="outlined"
+            <TextField label="LastName"
+                       margin="dense"
+                       fullWidth
                        onChange={e => updateStudentData("LastName", e.target.value)}/>
-            <TextField id="outlined-basic" label="Email"
-                       defaultValue="Email" variant="outlined"
+            <TextField label="Email"
+                       margin="dense"
+                       fullWidth
                        onChange={e => updateStudentData("Email", e.target.value)}/>
-            <TextField id="outlined-basic" label="Password"
-                       defaultValue="Password" variant="outlined"
+            <TextField label="Password"
+                       margin="dense"
+                       fullWidth
                        onChange={e => updateStudentData("Password", e.target.value)}/>
         </>
 

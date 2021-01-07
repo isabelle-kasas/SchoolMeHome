@@ -3,16 +3,26 @@ import AdminRepository from "../../../../repositories/AdminRepository";
 import CustomDialog from "../../../global/CustomDialog";
 import AddUserForm from "../../../global/form/AddUserForm";
 import {UserFormContext, UserType} from "../DashboardAdmin";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogActions from "@material-ui/core/DialogActions";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import {TransitionProps} from "@material-ui/core/transitions";
+import Slide from "@material-ui/core/Slide";
 
 
 const addNewUser = (userFormData: UserFormData, userType: UserType): void => {
     userFormData.userRole = userType
+    console.log(userFormData)
     new AdminRepository().addNewUser(userFormData)
 }
 
 interface ModalAddNewUserProps {
     userType: UserType
 }
+
 
 const ModalAddNewUser = ({userType}: ModalAddNewUserProps): ReactElement => {
 
@@ -25,14 +35,19 @@ const ModalAddNewUser = ({userType}: ModalAddNewUserProps): ReactElement => {
     const [userForm] = useContext(UserFormContext)
 
     const handleClickOpen = () => {
+        console.log("Open" + open)
         setOpen(true);
+        console.log("Open" + open)
     };
 
     const handleClose = () => {
+        console.log("Close" + open)
         setOpen(false);
+        console.log("Close" + open)
     };
 
     const handlePositiveAction = (): void => {
+        console.log("OK")
         addNewUser(userForm, userType);
         handleClose();
     }
