@@ -28,8 +28,14 @@
   align-items: center; */
 
   background-color: var(--primary-dark);
-  border-radius: var(--radius-bg) 0  0 var(--radius-bg);
-  margin-right: -16px;
+  /* border-radius: var(--radius-bg) 0  0 var(--radius-bg); */
+  border-radius: var(--radius-bg);
+  /* margin-right: -16px; */
+  margin-bottom: 20px;
+}
+
+.slide-active {
+  border: 2px solid var(--accent);
 }
 
 .slideCreation-rigth-container {
