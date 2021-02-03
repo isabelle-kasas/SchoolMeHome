@@ -1,25 +1,12 @@
-import React, {createContext, ReactElement, useContext, useState} from "react";
-import AdminRepository from "../../../../repositories/AdminRepository";
+import React, {ReactElement, useContext} from "react";
 import CustomDialog from "../../../global/CustomDialog";
 import AddUserForm from "../../../global/form/AddUserForm";
 import {UserFormContext, UserType} from "../DashboardAdmin";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogActions from "@material-ui/core/DialogActions";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import {TransitionProps} from "@material-ui/core/transitions";
-import Slide from "@material-ui/core/Slide";
-import {Container} from "@material-ui/core";
-import Grid from "@material-ui/core/Grid";
+import "./ModalAddNewUser.css"
+import {Button, Grid, Paper} from "@material-ui/core";
+import DefaultPicture from "../../../../../src/image/profil.png"
+import {gql, useMutation} from "@apollo/client";
 
-
-const addNewUser = (userFormData: UserFormData, userType: UserType): void => {
-    userFormData.userRole = userType
-    console.log(userFormData)
-    new AdminRepository().addNewUser(userFormData)
-}
 
 interface ModalAddNewUserProps {
     userType: UserType
@@ -28,13 +15,22 @@ interface ModalAddNewUserProps {
 
 const ModalAddNewUser = ({userType}: ModalAddNewUserProps): ReactElement => {
 
-    const DIALOG_TITLE = "Ajoutez un.e nouvel.le utilisateur (" + userType + ")"
+    const DIALOG_TITLE = "Ajoutez un.e nouvel.le utilisateur (" + userType +")"
     const DIALOG_CONTENT = "Remplissez le formulaire ci-dessous afin de créer un.e nouvel.le utilisateur"
     const DIALOG_POSITIVE = "Ajouter"
     const DIALOG_NEGATIVE = "Annuler"
 
     const [open, setOpen] = React.useState(false);
     const [userForm] = useContext(UserFormContext)
+
+    const NEW_USER = gql`
+        mutation SignUp ($user: UserInput!) {
+            signup(data: $user){
+                _id
+            }
+        }
+    `;
+    const [signup] = useMutation<any>(NEW_USER)
 
     const handleClickOpen = () => {
         console.log("Open" + open)
@@ -54,29 +50,91 @@ const ModalAddNewUser = ({userType}: ModalAddNewUserProps): ReactElement => {
         handleClose();
     }
 
+    const addNewUser = (userFormData: UserFormData, userType: UserType): void => {
+        switch (userType) {
+            case "STUDENT":
+                userFormData.role = "User"
+                break
+            case "TEACHER":
+                userFormData.role = "Teacher"
+                break
+            case "ADMIN":
+                userFormData.role = "Admin"
+        }
+        const user = new User(userFormData.firstName, userFormData.lastName, userFormData.email, userFormData.password, userFormData.role)
+        signup({ variables: { user: user} })
+            .then((data) => {
+                console.log(data)
+            }).catch((e) => {
+                console.log(e)
+        })
+    }
+
     return (
-        <div>
-             <button onClick={handleClickOpen}>Open Modal</button>
-                <CustomDialog open={open}
-                              handleClose={handleClose}
-                              handlePositiveAction={handlePositiveAction}
-                              dialogTitle={DIALOG_TITLE}
-                              dialogContent={DIALOG_CONTENT}
-                              positiveButton={DIALOG_POSITIVE}
-                              negativeButton={DIALOG_NEGATIVE}>
-                    <AddUserForm userType={userType}/>
-                </CustomDialog>
-        </div>
+        <Paper className="margin-default padding-default text-center">
+            <Grid item xs={12}>
+                <img className="width-max" src={DefaultPicture} alt="Default Picture"/>
+            </Grid>
+            <Grid item xs={12}>
+                <Button onClick={handleClickOpen}>Open Modal</Button>
+            </Grid>
+            <CustomDialog open={open}
+                          handleClose={handleClose}
+                          handlePositiveAction={handlePositiveAction}
+                          dialogTitle={DIALOG_TITLE}
+                          dialogContent={DIALOG_CONTENT}
+                          positiveButton={DIALOG_POSITIVE}
+                          negativeButton={DIALOG_NEGATIVE}>
+                <AddUserForm userType={userType}/>
+            </CustomDialog>
+        </Paper>
     )
 }
 
-export class UserFormData {
-    private _firstName: String
-    private _lastName: String
-    private _email: String
-    private _password: String
-    private _userRole: number
+export class User {
+    firstName: String
+    lastName: String
+    email: String
+    password: String
+    role: String
 
+    constructor(firstName: String, lastName: String, email: String, password: String, role: String) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
+}
+
+export class UserFormData {
+    _firstName: String
+    _lastName: String
+    _email: String
+    _password: String
+    _role: String
+
+
+    get firstName(): String {
+        console.log(this)
+        return this._firstName;
+    }
+
+    get lastName(): String {
+        return this._lastName;
+    }
+
+    get email(): String {
+        return this._email;
+    }
+
+    get password(): String {
+        return this._password;
+    }
+
+    get role(): String {
+        return this._role;
+    }
 
     set firstName(value: String) {
         this._firstName = value;
@@ -94,16 +152,17 @@ export class UserFormData {
         this._password = value;
     }
 
-    set userRole(value: number) {
-        this._userRole = value;
+    set role(value: String) {
+        this._role = value;
     }
 
-    constructor(firstName: String, lastName: String, email: String, password: String, userRole: number) {
+    constructor(firstName: String, lastName: String, email: String, password: String, userRole: String) {
+        console.log('constructing')
         this._firstName = firstName;
         this._lastName = lastName;
         this._email = email;
         this._password = password;
-        this._userRole = userRole;
+        this._role = userRole;
     }
 }
 

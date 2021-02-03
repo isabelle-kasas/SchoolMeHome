@@ -47,5 +47,12 @@ export class UserServiceClass{
             }
         return null as any;
         }
+
+
+    @Query(() => [User])
+    public async fetchAll(): Promise<User[]> {
+        const model = getModelForClass(User)
+        return model.find();
+    }
 }
 export const UserService = new UserServiceClass();

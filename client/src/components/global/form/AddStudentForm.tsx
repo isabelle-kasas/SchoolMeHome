@@ -1,11 +1,13 @@
 import React, {ReactElement, useContext} from "react";
 import {TextField} from "@material-ui/core";
 import {UserFormContext} from "../../dashboard/dashboard-admin/DashboardAdmin";
+import {UserFormData} from "../../dashboard/dashboard-admin/ModalAddNewUser/ModalAddNewUser";
 
 
 const AddStudentForm = (): ReactElement => {
 
     const [studentData, setStudentData] = useContext(UserFormContext)
+    // console.log(studentData instanceof UserFormData)
     const updateStudentData = (key: String, value: String) => {
         switch (key) {
             case "FirstName" :
@@ -21,6 +23,7 @@ const AddStudentForm = (): ReactElement => {
                 studentData.password = value
                 break;
         }
+        // console.log(studentData instanceof UserFormData)
         setStudentData(studentData)
     }
 
